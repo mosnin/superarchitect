@@ -1,0 +1,276 @@
+# =============================================================================
+# Canonical System Package — MASTER TEMPLATE
+# =============================================================================
+# Schema: os/kernel/schemas/canonical_system_package.schema.json
+# Purpose: The single source of truth for an entire project. Every kernel
+#          phase reads from and writes to this package. This template is the
+#          skeleton that gets populated throughout the 7-phase pipeline.
+#
+# Lifecycle:
+#   Phase 1 (Intent)      → populates metadata + intent
+#   Phase 2 (Model)       → populates success_model
+#   Phase 3 (Generate)    → populates candidates
+#   Phase 4 (Select)      → populates selection
+#   Phase 5 (Synthesize)  → populates synthesis
+#   Phase 6 (Audit)       → populates audit, may trigger evolution entries
+#   Phase 7 (Deliver)     → populates outputs + handoff
+# =============================================================================
+
+# ===========================================================================
+# METADATA
+# ===========================================================================
+metadata:
+  package_id: ""              # UUID v4 — generated at pipeline start
+  project_id: ""              # Kebab-case project slug (matches intent)
+  version: "0.1.0"            # Semver — incremented on each audit pass
+  created_at: ""              # ISO 8601 — set at pipeline start
+  updated_at: ""              # ISO 8601 — updated on every write
+  # Status values: initializing | intent_compiled | model_defined |
+  #   candidates_generated | candidate_selected | synthesized |
+  #   auditing | passed | rerouting | overdrive | delivered | archived
+  status: "initializing"
+  kernel_version: "1.0.0"    # Version of the kernel that produced this
+
+# ===========================================================================
+# INTENT — Phase 1 output
+# ===========================================================================
+intent:
+  metadata:
+    project_id: ""
+    created_at: ""
+  intent:
+    raw_request: ""
+    objective: ""
+    desired_outcomes:
+      - ""
+    known_constraints:
+      - ""
+    implicit_constraints:
+      - ""
+    consequence_level: "medium"
+    ambiguity_notes:
+      - ""
+    domain_signals:
+      - ""
+    system_type_classification: ""
+  output_requirements:
+    required_artifacts:
+      - ""
+    format_preferences:
+      - ""
+    handoff_targets:
+      - ""
+
+# ===========================================================================
+# SUCCESS MODEL — Phase 2 output
+# ===========================================================================
+success_model:
+  universal_backbone:
+    coherence:
+      score: 0.0
+      weight: 0.9
+      threshold: 0.75
+      description: ""
+    completeness:
+      score: 0.0
+      weight: 0.85
+      threshold: 0.7
+      description: ""
+    internal_consistency:
+      score: 0.0
+      weight: 0.8
+      threshold: 0.7
+      description: ""
+    adaptability:
+      score: 0.0
+      weight: 0.7
+      threshold: 0.65
+      description: ""
+    efficiency:
+      score: 0.0
+      weight: 0.7
+      threshold: 0.6
+      description: ""
+    failure_awareness:
+      score: 0.0
+      weight: 0.85
+      threshold: 0.75
+      description: ""
+    legibility:
+      score: 0.0
+      weight: 0.75
+      threshold: 0.65
+      description: ""
+    implementability:
+      score: 0.0
+      weight: 0.8
+      threshold: 0.7
+      description: ""
+  project_specific_dimensions: {}
+  tradeoff_priority: []
+  failure_conditions: []
+  pass_logic:
+    minimum_dimension_scores: {}
+    evidence_thresholds: {}
+    uncertainty_tolerances: {}
+
+# ===========================================================================
+# CANDIDATES — Phase 3 output (array of architecture candidates)
+# ===========================================================================
+candidates: []
+  # Each entry follows candidate_architecture.schema.json:
+  # - candidate_id: "CAND-001"
+  #   thesis: ""
+  #   summary: ""
+  #   structural_bias: ""
+  #   assumptions: []
+  #   advantages: []
+  #   liabilities: []
+  #   subsystems: []
+  #   interfaces: []
+  #   flows: []
+  #   fitness_scores: {}
+
+# ===========================================================================
+# SELECTION — Phase 4 output
+# ===========================================================================
+selection:
+  chosen_candidate_id: ""     # CAND-NNN or CAND-HYB-NNN
+  hybridized_from: []         # Source candidate IDs if hybrid
+  rationale: ""               # Must reference success model dimensions
+  confidence: 0.0             # 0.0-1.0
+
+# ===========================================================================
+# SYNTHESIS — Phase 5 output
+# ===========================================================================
+synthesis:
+  # Fully detailed subsystem definitions
+  subsystems: []
+    # - name: ""
+    #   purpose: ""
+    #   responsibilities: []
+    #   inputs: []
+    #   outputs: []
+    #   technology_stack:
+    #     language: ""
+    #     framework: ""
+    #     runtime: ""
+    #     datastore: ""
+    #   scaling_strategy: ""
+    #   deployment_unit: ""
+    #   data_ownership: []
+
+  # Fully specified interface contracts
+  interfaces: []
+    # - from: ""
+    #   to: ""
+    #   protocol: ""
+    #   description: ""
+    #   synchronous: true
+    #   contract_format: ""
+    #   authentication: ""
+    #   rate_limit: ""
+    #   sla: ""
+
+  # Detailed runtime flows
+  flows: []
+    # - name: ""
+    #   triggers: []
+    #   steps: []
+    #   error_path: ""
+    #   latency_budget: ""
+    #   timeout: ""
+    #   idempotent: false
+
+  # External dependencies
+  dependencies: []
+    # - name: ""
+    #   type: ""            # library | service | cloud_resource | third_party_api | infrastructure
+    #   purpose: ""
+    #   version_constraint: ""
+    #   risk_level: "low"
+    #   fallback: ""
+
+  # Dynamic control points
+  control_points: []
+    # - name: ""
+    #   type: ""            # feature_flag | rate_limiter | circuit_breaker | config_switch | canary | kill_switch
+    #   location: ""
+    #   purpose: ""
+
+  # Feedback mechanisms
+  feedback_loops: []
+    # - name: ""
+    #   signal_source: ""
+    #   action: ""
+    #   trigger_condition: ""
+
+  # Failure containment boundaries
+  failure_containment: []
+    # - name: ""
+    #   scope: []
+    #   containment_strategy: ""
+    #   fallback_behavior: ""
+
+  # Anticipated evolution paths
+  evolution_paths: []
+    # - name: ""
+    #   trigger: ""
+    #   changes: []
+    #   complexity: "medium"
+
+# ===========================================================================
+# AUDIT — Phase 6 output
+# ===========================================================================
+audit:
+  current_vector: null        # Populated by first audit pass
+  previous_vectors: []        # History of prior audit vectors
+  pass_count: 0
+  reroute_count: 0
+
+# ===========================================================================
+# ROUTING STATE — Pipeline execution state
+# ===========================================================================
+routing_state:
+  # Status: idle | running | paused | rerouting | overdrive | completed | failed | escalated
+  status: "idle"
+  # Current phase being executed
+  current_phase: ""
+  # Reroute target phase (empty if not rerouting)
+  reroute_target: ""
+  # Mode: standard | search_heavy | conservative | overdrive
+  mode: "standard"
+
+# ===========================================================================
+# EVOLUTION LEDGER — Mutation history from reroute/overdrive cycles
+# ===========================================================================
+evolution: []
+  # Each entry follows evolution_ledger_entry.schema.json:
+  # - iteration: 1
+  #   timestamp: ""
+  #   failed_layer: ""
+  #   weak_dimensions: {}
+  #   deltas: {}
+  #   reroute_target: ""
+  #   mutation_applied: ""
+  #   rationale: ""
+  #   result: ""          # improved | no_change | degraded
+  #   post_mutation_scores: {}
+
+# ===========================================================================
+# OUTPUTS — Phase 7 deliverables
+# ===========================================================================
+outputs:
+  blueprint_path: ""          # Path to architecture blueprint document
+  manifest_path: ""           # Path to build manifest
+  package_summary: ""         # Human-readable summary of what was built
+
+# ===========================================================================
+# HANDOFF — Delivery configuration
+# ===========================================================================
+handoff:
+  downstream_targets: []      # OS teams, CI pipelines, external systems
+  adapter: ""                 # Adapter for format translation (empty if native)
+  # Delivery method: file_system | api | message_queue | manual
+  delivery_method: "file_system"
+  notes: ""                   # Caveats, priorities, known issues

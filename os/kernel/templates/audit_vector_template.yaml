@@ -1,0 +1,107 @@
+# =============================================================================
+# Audit Vector Template — Phase 6 Output
+# =============================================================================
+# Produced by: Quality Auditor agent
+# Schema: os/kernel/schemas/audit_vector.schema.json
+# Purpose: Point-in-time evaluation of the synthesized architecture across
+#          all dimensions. Determines pass, reroute, or overdrive status.
+# =============================================================================
+
+# Audit iteration number (starts at 1, increments per reroute cycle)
+iteration: 1
+
+# ISO 8601 timestamp of when this audit was performed
+timestamp: ""
+
+# ---------------------------------------------------------------------------
+# Dimension Scores — one entry per success model dimension
+# ---------------------------------------------------------------------------
+# Every dimension from the success model (backbone + project-specific) must
+# have a corresponding entry here.
+dimensions:
+  coherence:
+    score: 0.0          # Quality score (0.0-1.0)
+    evidence: 0.0       # Evidence level supporting the score (0.0-1.0)
+    uncertainty: 0.0    # Uncertainty about the score (0.0-1.0)
+    delta: 0.0          # Change from previous iteration (0.0 on first)
+    status: "fail"      # pass | warn | fail
+    rationale: ""       # Must reference specific architectural elements
+
+  completeness:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  internal_consistency:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  adaptability:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  efficiency:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  failure_awareness:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  legibility:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  implementability:
+    score: 0.0
+    evidence: 0.0
+    uncertainty: 0.0
+    delta: 0.0
+    status: "fail"
+    rationale: ""
+
+  # Add project-specific dimension entries here:
+  # dimension_name:
+  #   score: 0.0
+  #   evidence: 0.0
+  #   uncertainty: 0.0
+  #   delta: 0.0
+  #   status: "fail"
+  #   rationale: ""
+
+# ---------------------------------------------------------------------------
+# Overall Status
+# ---------------------------------------------------------------------------
+# pass     — all dimensions meet thresholds, pipeline proceeds to delivery
+# reroute  — one or more dimensions failed, pipeline loops back
+# overdrive — critical failures, maximum remediation effort applied
+overall_status: "fail"
+
+# Phase to reroute to (empty string if status is "pass")
+reroute_target: ""
+
+# Explanation of why reroute is necessary (empty string if status is "pass")
+reroute_rationale: ""

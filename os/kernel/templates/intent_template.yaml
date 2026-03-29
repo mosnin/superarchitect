@@ -1,0 +1,68 @@
+# =============================================================================
+# Intent Template — Phase 1 Output
+# =============================================================================
+# Produced by: Intent Analyst agent + Controller Architect
+# Schema: os/kernel/schemas/intent.schema.json
+# Purpose: Captures the parsed, enriched representation of a build request.
+#          This object is the foundation that all downstream phases build upon.
+# =============================================================================
+
+metadata:
+  # Unique project identifier (kebab-case, 3-128 chars)
+  project_id: ""
+  # ISO 8601 timestamp of intent compilation
+  created_at: ""
+
+intent:
+  # The original, unmodified request from the human operator
+  raw_request: ""
+
+  # Distilled single-sentence objective (what the system must achieve)
+  objective: ""
+
+  # Concrete, measurable outcomes that define success
+  desired_outcomes:
+    - ""  # Each outcome should be independently testable
+
+  # Constraints explicitly stated by the requester
+  known_constraints:
+    - ""  # e.g., "Must use PostgreSQL", "Deploy to AWS", "SOC2 required"
+
+  # Constraints inferred by the intent analyst (not explicitly stated)
+  implicit_constraints:
+    - ""  # e.g., "Multi-tenancy requires tenant data isolation"
+
+  # Assessed severity of getting this system wrong
+  # Values: low | medium | high | critical
+  consequence_level: "medium"
+
+  # Areas where the request is ambiguous or underspecified
+  ambiguity_notes:
+    - ""  # Not blockers — recorded for downstream phases to resolve
+
+  # Domain-specific signals that influence architecture decisions
+  domain_signals:
+    - ""  # e.g., "B2B SaaS implies enterprise SSO and audit logging"
+
+  # Classified system type — determines which build workflow is selected
+  # Must match a registered workflow in the OS manifest
+  system_type_classification: ""
+
+output_requirements:
+  # Artifact types that the build must produce
+  required_artifacts:
+    - "architecture_blueprint"
+    - "api_contracts"
+    - "database_schema"
+    - "infrastructure_as_code"
+    - "ci_cd_pipeline"
+    - "test_suite"
+    - "deployment_runbook"
+
+  # Preferred formats for output artifacts
+  format_preferences:
+    - ""  # e.g., "OpenAPI 3.1 for APIs", "Terraform for infra"
+
+  # Downstream consumers of the build output
+  handoff_targets:
+    - ""  # e.g., "engineering_team", "github_actions_ci"

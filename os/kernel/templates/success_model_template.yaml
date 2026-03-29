@@ -1,0 +1,143 @@
+# =============================================================================
+# Success Model Template — Phase 2 Output
+# =============================================================================
+# Produced by: Success Model Architect agent + Controller Architect
+# Schema: os/kernel/schemas/success_model.schema.json
+# Purpose: Defines the evaluation framework against which all architecture
+#          candidates and the final synthesis are scored. Contains 8 fixed
+#          universal dimensions plus project-specific dimensions.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Universal Backbone — 8 fixed quality dimensions (always present)
+# ---------------------------------------------------------------------------
+universal_backbone:
+  coherence:
+    score: 0.0       # Populated during audit (0.0-1.0)
+    weight: 0.9      # Relative importance (0.0-1.0)
+    threshold: 0.75  # Minimum acceptable score
+    description: "Does the architecture tell a unified story? Are all parts aligned toward the same objective?"
+
+  completeness:
+    score: 0.0
+    weight: 0.85
+    threshold: 0.7
+    description: "Does the architecture address all requirements, constraints, and edge cases?"
+
+  internal_consistency:
+    score: 0.0
+    weight: 0.8
+    threshold: 0.7
+    description: "Are naming conventions, patterns, abstractions, and assumptions consistent across the system?"
+
+  adaptability:
+    score: 0.0
+    weight: 0.7
+    threshold: 0.65
+    description: "Can the system evolve to meet future requirements without fundamental restructuring?"
+
+  efficiency:
+    score: 0.0
+    weight: 0.7
+    threshold: 0.6
+    description: "Does the architecture achieve its goals without unnecessary complexity or resource waste?"
+
+  failure_awareness:
+    score: 0.0
+    weight: 0.85
+    threshold: 0.75
+    description: "Does the architecture explicitly account for failure modes, degradation paths, and recovery strategies?"
+
+  legibility:
+    score: 0.0
+    weight: 0.75
+    threshold: 0.65
+    description: "Can a competent engineer understand the system's structure and behavior from the architecture?"
+
+  implementability:
+    score: 0.0
+    weight: 0.8
+    threshold: 0.7
+    description: "Can this architecture be realistically built with available resources, skills, and timeline?"
+
+# ---------------------------------------------------------------------------
+# Project-Specific Dimensions — derived from intent analysis
+# ---------------------------------------------------------------------------
+# Add dimensions that are unique to this project's domain and constraints.
+# Each must follow the same structure as backbone dimensions.
+project_specific_dimensions:
+  # example_dimension:
+  #   score: 0.0
+  #   weight: 0.85
+  #   threshold: 0.8
+  #   description: "Description of what this dimension measures."
+
+# ---------------------------------------------------------------------------
+# Tradeoff Priority — ordered from highest to lowest
+# ---------------------------------------------------------------------------
+# When dimensions conflict, higher-priority dimensions win.
+# Must include all backbone + project-specific dimension names.
+tradeoff_priority:
+  - "coherence"
+  - "failure_awareness"
+  - "completeness"
+  - "implementability"
+  - "internal_consistency"
+  - "efficiency"
+  - "adaptability"
+  - "legibility"
+  # Add project-specific dimensions in priority order
+
+# ---------------------------------------------------------------------------
+# Failure Conditions — hard failures that override aggregate scores
+# ---------------------------------------------------------------------------
+failure_conditions:
+  - id: "FC-001"
+    condition: "dimension.coherence.score < 0.5"
+    severity: "blocking"  # warning | blocking | critical
+    description: "An incoherent architecture cannot be implemented safely."
+
+  - id: "FC-002"
+    condition: "dimension.failure_awareness.score < 0.5 AND dimension.failure_awareness.evidence > 0.6"
+    severity: "blocking"
+    description: "A system that does not account for failure modes will fail unpredictably in production."
+
+  # Add project-specific failure conditions as needed
+
+# ---------------------------------------------------------------------------
+# Pass Logic — quantitative thresholds for audit pass
+# ---------------------------------------------------------------------------
+pass_logic:
+  # Minimum acceptable score per dimension
+  minimum_dimension_scores:
+    coherence: 0.75
+    completeness: 0.7
+    internal_consistency: 0.7
+    adaptability: 0.65
+    efficiency: 0.6
+    failure_awareness: 0.75
+    legibility: 0.65
+    implementability: 0.7
+    # Add project-specific dimension thresholds
+
+  # Minimum evidence level for each dimension's score to be trusted
+  evidence_thresholds:
+    coherence: 0.6
+    completeness: 0.6
+    internal_consistency: 0.5
+    adaptability: 0.5
+    efficiency: 0.5
+    failure_awareness: 0.7
+    legibility: 0.5
+    implementability: 0.6
+
+  # Maximum acceptable uncertainty per dimension
+  uncertainty_tolerances:
+    coherence: 0.3
+    completeness: 0.3
+    internal_consistency: 0.35
+    adaptability: 0.4
+    efficiency: 0.4
+    failure_awareness: 0.25
+    legibility: 0.4
+    implementability: 0.3

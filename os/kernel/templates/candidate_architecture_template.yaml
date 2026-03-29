@@ -1,0 +1,100 @@
+# =============================================================================
+# Candidate Architecture Template — Phase 3 Output (per candidate)
+# =============================================================================
+# Produced by: Architecture Generator agents
+# Schema: os/kernel/schemas/candidate_architecture.schema.json
+# Purpose: Describes a single architecture candidate — a distinct structural
+#          approach to fulfilling the intent. Multiple candidates are generated
+#          and evaluated before selection in Phase 4.
+# =============================================================================
+
+# Unique candidate identifier (format: CAND-NNN)
+candidate_id: "CAND-001"
+
+# The core architectural bet — one sentence that defines this candidate
+thesis: ""
+
+# 2-5 sentence overview of major structural decisions, key technologies, deployment model
+summary: ""
+
+# Primary architectural style
+# Values: monolith | modular_monolith | microservices | event_driven | serverless |
+#         hybrid | data_mesh | pipe_and_filter | layered | hexagonal |
+#         cqrs_event_sourced | actor_model | other
+structural_bias: ""
+
+# ---------------------------------------------------------------------------
+# Assumptions — each is a risk if proven false
+# ---------------------------------------------------------------------------
+assumptions:
+  - ""  # e.g., "Team has Kubernetes experience"
+
+# ---------------------------------------------------------------------------
+# Advantages — why this approach works for this project
+# ---------------------------------------------------------------------------
+advantages:
+  - description: ""
+    dimensions_served:  # Which success model dimensions this supports
+      - ""
+
+# ---------------------------------------------------------------------------
+# Liabilities — known weaknesses, risks, or costs
+# ---------------------------------------------------------------------------
+liabilities:
+  - description: ""
+    severity: "medium"  # low | medium | high | critical
+    mitigation: ""      # Known mitigation strategy
+    dimensions_threatened:
+      - ""
+
+# ---------------------------------------------------------------------------
+# Subsystems — major components of this architecture
+# ---------------------------------------------------------------------------
+subsystems:
+  - name: ""
+    purpose: ""          # One sentence: what this subsystem does
+    inputs:
+      - ""               # What it receives
+    outputs:
+      - ""               # What it produces
+    technology: ""       # Primary technology (optional at this stage)
+    scaling_strategy: "" # How it scales (optional at this stage)
+
+# ---------------------------------------------------------------------------
+# Interfaces — connections between subsystems
+# ---------------------------------------------------------------------------
+interfaces:
+  - from: ""             # Source subsystem name
+    to: ""               # Target subsystem name
+    protocol: ""         # e.g., REST/HTTP, gRPC, async/kafka, websocket
+    description: ""      # What flows across this interface
+    synchronous: true    # true for sync, false for async
+    contract_defined: false  # Whether a formal contract exists
+
+# ---------------------------------------------------------------------------
+# Flows — key runtime scenarios
+# ---------------------------------------------------------------------------
+flows:
+  - name: ""             # Descriptive flow name
+    triggers:
+      - ""               # What initiates this flow
+    steps:
+      - ""               # "SubsystemA -> SubsystemB: action description"
+    error_path: ""       # What happens on failure
+    latency_budget: ""   # Target e2e latency (e.g., "<200ms p99")
+
+# ---------------------------------------------------------------------------
+# Fitness Scores — preliminary evaluation against success model dimensions
+# ---------------------------------------------------------------------------
+# Keys must match dimension names from the success model.
+# Values are 0.0-1.0 estimates refined during audit.
+fitness_scores:
+  coherence: 0.0
+  completeness: 0.0
+  internal_consistency: 0.0
+  adaptability: 0.0
+  efficiency: 0.0
+  failure_awareness: 0.0
+  legibility: 0.0
+  implementability: 0.0
+  # Add project-specific dimension scores

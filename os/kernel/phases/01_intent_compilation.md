@@ -14,9 +14,9 @@ This phase does NOT solve the architecture problem. It defines the problem preci
 
 ## Responsibilities
 
-1. **Identify the core objective**: What does the user actually need? Strip away solution assumptions to find the underlying goal. "Build me a Kubernetes cluster" might really mean "I need reliable, scalable deployment infrastructure."
+1. **Identify the core objective**: What does the user actually need? Strip away solution assumptions to find the underlying goal. "I need a highly available cluster" might really mean "I need reliable, scalable deployment infrastructure."
 
-2. **Infer missing structural needs**: Users rarely specify all system requirements. A request for "a real-time collaboration platform" implies websocket infrastructure, conflict resolution, presence management, and persistence -- even if none are mentioned.
+2. **Infer missing structural needs**: Users rarely specify all system requirements. A request for "a real-time collaboration platform" implies persistent transport, conflict resolution, presence management, and storage -- even if none are mentioned.
 
 3. **Identify ambiguity**: Map every point where the request could be interpreted in multiple valid ways. Do not resolve ambiguity by guessing. Flag it explicitly so Phase 2 (Success Model) and Phase 3 (Architecture Search) can account for it.
 
@@ -35,10 +35,10 @@ This phase does NOT solve the architecture problem. It defines the problem preci
 | Input | Source | Required |
 |-------|--------|----------|
 | Raw user request | Human operator | Yes |
-| Existing codebase/system context | File system / documentation | No |
+| Existing system context | File system / documentation | No |
 | Previous system packages | Package archive | No |
-| Domain context from Research team | OS Team 10 | No |
-| Requirements framing from Product team | OS Team 9 | No |
+| Domain context | Domain practitioner / research | No |
+| Requirements framing | Stakeholder input | No |
 
 ---
 
@@ -94,16 +94,6 @@ A structured assessment of project consequence that drives mode selection and es
 
 ---
 
-## OS Team Dispatch
-
-### Product Team (Team 9)
-Assists with requirements framing. The Product team translates business language into system requirements, identifies stakeholder needs that the raw request may not capture, and validates that the extracted objective matches the user's actual intent.
-
-### Research Team (Team 10)
-Provides domain context. If the request involves a domain the kernel has not recently processed, the Research team gathers competitive intelligence, industry standards, regulatory requirements, and technology landscape information.
-
----
-
 ## Fail Conditions
 
 The phase FAILS and must not advance if:
@@ -130,11 +120,10 @@ The phase FAILS and must not advance if:
 3. Infer implicit requirements (what the system needs but the user did not say)
 4. Identify contradictions and ambiguities
 5. Estimate consequence level
-6. Dispatch Product team for requirements validation if needed
-7. Dispatch Research team for domain context if needed
-8. Compile intent object
-9. Self-review against fail conditions
-10. Emit intent object, ambiguity map, output profile, consequence rating
+6. Gather domain context if needed (from available documentation, domain research, or stakeholder input)
+7. Compile intent object
+8. Self-review against fail conditions
+9. Emit intent object, ambiguity map, output profile, consequence rating
 
 ---
 
@@ -162,7 +151,7 @@ intent:
       description: "Requires conflict resolution mechanism for concurrent edits"
       confidence: 0.95
     - type: "infrastructure"
-      description: "Requires persistent websocket or equivalent real-time transport"
+      description: "Requires persistent real-time transport layer"
       confidence: 0.90
     - type: "operational"
       description: "Requires presence/awareness system for active collaborators"
@@ -172,8 +161,8 @@ intent:
   ambiguity_notes:
     - area: "collaboration modality"
       interpretations:
-        - "Document editing (Google Docs style)"
-        - "Whiteboard/canvas collaboration (Figma/Miro style)"
+        - "Document editing (text-based)"
+        - "Visual/canvas collaboration"
         - "General-purpose collaboration framework"
       resolution_strategy: "Generate candidates covering different modalities in Phase 3"
     - area: "10M users concurrency model"
@@ -191,7 +180,7 @@ output_requirements:
     - "Markdown blueprint"
   downstream_targets:
     - "Engineering teams for implementation"
-    - "DevOps for infrastructure provisioning"
+    - "Infrastructure team for provisioning"
 ```
 
 ---

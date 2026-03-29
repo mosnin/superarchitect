@@ -173,13 +173,13 @@ Overdrive deactivates when all dimensions are above the critical threshold.
 
 ---
 
-## OS Team Dispatch
+## Kernel Agent
 
-### QA Team (Team 8)
-Runs quality audits on the synthesis. Evaluates testability, coverage strategy feasibility, test architecture alignment, and whether the system can be validated as specified. QA findings feed into the completeness and implementability dimensions.
+**Primary**: Audit Architect — owns all confidence vector production, dimension scoring, reroute targeting, and evolution ledger entries.
 
-### Security Team (Team 7)
-Runs security audits. Evaluates threat model completeness, authentication/authorization architecture, data protection, dependency security, and compliance posture. Security findings feed into failure awareness and project-specific security dimensions.
+The Audit Architect operates independently from the Synthesis Architect to prevent self-review bias. It receives the synthesized architecture as input and evaluates it against the success model without knowledge of the synthesis decisions that produced it.
+
+Domain practitioners may provide domain-specific evidence for project-specific dimensions (e.g., regulatory compliance assessment, clinical safety review, load-bearing verification) — but the structural dimensions of the universal backbone are scored by the kernel alone.
 
 ---
 

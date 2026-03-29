@@ -97,24 +97,15 @@ If a primitive is genuinely not applicable, it must be explicitly marked `N/A` w
 
 ---
 
-## OS Team Dispatch
+## Kernel Agents
 
-This phase activates the full team roster. Each team contributes domain expertise to a specific aspect of the synthesis.
+**Primary**: Synthesis Architect — owns the complete structural elaboration, responsible for all 11 primitives being represented.
 
-### Architecture Team (Team 2)
-Owns the structural decomposition. Validates subsystem boundaries, interface contracts, and flow patterns against domain best practices. Ensures the synthesis is architecturally sound.
+**Supporting agents activated in parallel**:
+- **Failure Mode Architect**: Adversarially pressure-tests every subsystem and interface. For each component, asks "how does this break?" and validates that containment is in place before the phase completes.
+- **Optimization Architect**: Reviews the synthesis for unnecessary complexity. Every subsystem, interface, and dependency must earn its place. Removes anything that adds complexity without proportional value.
 
-### Data Team (Team 5)
-Owns the data model within the synthesis. Defines data ownership per subsystem, data flow patterns, consistency guarantees, storage technology selection, and query patterns. Ensures data architecture aligns with structural architecture.
-
-### Security Team (Team 7)
-Produces the threat model. Identifies attack surfaces, defines authentication and authorization architecture, specifies encryption boundaries, and validates that security is structural (built into the architecture) rather than bolted on.
-
-### DevOps Team (Team 6)
-Defines infrastructure topology. Maps subsystems to deployment units, defines network architecture, specifies scaling mechanisms, and designs the observability stack. Ensures the architecture is deployable and operable.
-
-### Product Team (Team 9)
-Reviews interface design from the user perspective. Validates that the architecture supports the intended user experience, that latency budgets align with UX requirements, and that the system serves user needs as specified in the intent.
+Domain practitioners translate the synthesized architecture into domain-specific artifacts (engineering specifications, clinical pathway documents, operational manuals, construction plans) — but the synthesis itself is expressed in universal structural primitives.
 
 ---
 

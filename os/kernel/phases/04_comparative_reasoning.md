@@ -133,16 +133,14 @@ selection:
 
 ---
 
-## OS Team Dispatch
+## Domain Review
 
-### Architecture Team (Team 2)
-Reviews candidates from a structural and domain perspective. Identifies practical implementation challenges that pure structural analysis might miss. Validates that candidate subsystem decompositions are domain-appropriate.
+Domain practitioners provide field-specific evaluation that structural analysis cannot perform alone:
+- **Structural review**: Domain experts identify practical implementation challenges that pure structural scoring may miss — regulatory constraints, operational feasibility, domain-specific risks.
+- **Domain-specific dimensions**: Project-specific success model dimensions (clinical safety, regulatory compliance, route economics, etc.) require domain expertise to score accurately.
+- **Feasibility validation**: Candidates are structurally sound but domain practitioners confirm they can actually be built and operated in the target context.
 
-### Security Team (Team 7)
-Reviews each candidate's attack surface, authentication architecture, and data protection posture. Security concerns can shift rankings -- a candidate with excellent performance but poor security isolation may be ranked lower for high-consequence projects.
-
-### Data Team (Team 5)
-Reviews data model implications of each candidate. Evaluates consistency guarantees, data flow patterns, storage requirements, and query patterns. Data architecture differences between candidates can be decisive.
+Domain review inputs are incorporated into the comparative matrix as evidence adjustments — not as overrides of structural scores.
 
 ---
 

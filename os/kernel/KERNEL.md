@@ -6,11 +6,11 @@
 
 ## What is the Kernel?
 
-The kernel is a domain-agnostic architecture reasoning engine that sits above every specialist team in the SuperArchitect OS. It is the structural brain of the entire system.
+The kernel is a domain-agnostic architecture reasoning engine. It is the structural brain of the entire system.
 
-Where OS teams (Architect, Engineer, Security, QA, DevOps, Product, Data) carry domain expertise, the kernel carries structural cognition. It knows how to reason about systems at the level of shape, tradeoff, measurement, and evolution -- regardless of whether the system is a fintech API, a logistics network, a hospital management platform, or a machine learning pipeline.
+The kernel carries structural cognition. It knows how to reason about systems at the level of shape, tradeoff, measurement, and evolution -- regardless of whether the system is a logistics routing network, a hospital management platform, a financial settlement engine, or a distributed data processing system.
 
-The kernel does not generate code. It does not write infrastructure configs. It does not design UIs. It generates the system geometry that all of those activities build from. Everything downstream -- every API contract, every database schema, every deployment topology -- is an expression of kernel output.
+The kernel does not generate code. It does not write infrastructure configs. It does not design UIs. It generates the system geometry that all of those activities build from. Everything downstream -- every interface contract, every data model, every deployment topology -- is an expression of kernel output.
 
 ### What the kernel is
 
@@ -36,9 +36,9 @@ The kernel separates STRUCTURAL cognition from DOMAIN cognition.
 
 Structural cognition is the ability to reason about systems using universal primitives: purpose, boundary, inputs, transformations, outputs, interfaces, resources, constraints, feedback loops, failure modes, and evolution paths. These primitives apply to any system in any domain.
 
-Domain cognition is the ability to reason about specific technical or business concerns: database selection, authentication protocols, payment processing regulations, ML model architectures, container orchestration strategies. This expertise lives in the OS specialist teams.
+Domain cognition is the ability to reason about specific technical or business concerns: technology selection, compliance requirements, processing architectures, data modeling strategies, deployment topologies. This expertise is injected into the kernel pipeline at specific phases.
 
-The kernel handles structural cognition. OS teams handle domain cognition. The kernel dispatches teams at specific phases to inject domain expertise into structural reasoning. This separation is what prevents the OS from degenerating into a bag of ad-hoc heuristics.
+The kernel handles structural cognition. Domain expertise is applied at the points where structural decisions require it. This separation is what prevents architecture reasoning from degenerating into a bag of ad-hoc heuristics.
 
 Every domain differs in content. Most domains share structural laws. The kernel operates on those shared laws.
 
@@ -49,45 +49,52 @@ Every domain differs in content. Most domains share structural laws. The kernel 
 The kernel processes every architecture request through a staged pipeline. Each phase has defined inputs, outputs, responsibilities, and fail conditions. Phases are not cosmetic labels -- they enforce real cognitive separation between exploration, evaluation, synthesis, and audit.
 
 ### Phase 1: Intent Compilation
+
 Convert raw request into structured intent object. Extract objectives, constraints, ambiguities, consequence level, and output requirements. The messy human request becomes a machine-readable architecture input.
-- **Primary agent**: Intent Analyst
-- **OS team dispatch**: Product team (requirements framing), Research team (context gathering)
+
+- **Kernel agents activated**: Intent Analyst (primary), Controller Architect (oversight)
 - **Output**: Intent object, ambiguity map, consequence rating
 
 ### Phase 2: Success Model Generation
+
 Derive what "world class" means for THIS specific project. Merge universal backbone dimensions (coherence, completeness, consistency, adaptability, efficiency, failure awareness, legibility, implementability) with project-specific dimensions derived from intent. Define tradeoff ordering and failure conditions.
-- **Primary agent**: Success Model Architect
-- **OS team dispatch**: Product team (business success criteria), Research team (competitive benchmarks)
+
+- **Kernel agents activated**: Success Model Architect (primary), Controller Architect (threshold validation)
 - **Output**: Success model with scored dimensions, thresholds, tradeoff hierarchy
 
 ### Phase 3: Architecture Search
+
 Generate 3+ genuinely different structural theses. Not cosmetic variations. Each candidate must represent a fundamentally different tradeoff stance: modularity-first, simplicity-first, robustness-first, adaptability-first, performance-first.
-- **Primary agent**: Search Architect
-- **OS team dispatch**: Architecture team (domain-informed candidates), Research team (technology evaluation)
+
+- **Kernel agents activated**: Search Architect (primary), Controller Architect (diversity check)
 - **Output**: Candidate set with encoded assumptions, advantages, liabilities
 
 ### Phase 4: Comparative Reasoning
+
 Score and compare candidates against the success model. Produce a comparative matrix. Rank candidates. Determine whether to select one winner or hybridize the best traits from multiple. Document WHY the chosen direction won.
-- **Primary agent**: Comparative Reasoner
-- **OS team dispatch**: Architecture + Security + Data teams (domain-specific candidate review)
+
+- **Kernel agents activated**: Comparative Reasoner (primary), Failure Mode Architect (adversarial review), Optimization Architect (efficiency review), Controller Architect (selection authority)
 - **Output**: Comparative matrix, winner/hybrid decision, rationale
 
 ### Phase 5: Structural Synthesis
+
 Turn the winning thesis into complete system geometry. Define subsystems, interfaces, flows, dependencies, control points, feedback loops, failure containment, and evolution paths. Every system primitive must be represented.
-- **Primary agent**: Synthesis Architect
-- **OS team dispatch**: Full roster -- Architecture (structure), Data (data model), Security (threat model), DevOps (infrastructure topology), Product (interface design)
+
+- **Kernel agents activated**: Synthesis Architect (primary), Failure Mode Architect (failure containment), Optimization Architect (simplification), Controller Architect (coherence check)
 - **Output**: Synthesized architecture object with all primitives
 
 ### Phase 6: Audit and Routing
+
 Measure quality with machine-readable vectors. For each dimension emit score, evidence strength, uncertainty, delta from previous pass, and status. If dimensions fall below threshold, route back to the shallowest stage that can fix the defect.
-- **Primary agent**: Audit Architect
-- **OS team dispatch**: QA team (quality audit), Security team (security audit)
+
+- **Kernel agents activated**: Audit Architect (primary), Mutation Architect (on reroute), Controller Architect (routing authority)
 - **Output**: Audit vector, routing decision, evolution ledger entry
 
 ### Phase 7: Packaging
+
 Freeze canonical package. Generate human-readable blueprint markdown derived FROM the package. Produce handoff manifest for downstream consumers. Persist audit history.
-- **Primary agent**: Packaging Architect
-- **OS team dispatch**: Commander (synthesis), Product team (documentation quality)
+
+- **Kernel agents activated**: Packaging Architect (primary), Controller Architect (final sign-off)
 - **Output**: final_system_package.yaml, system_blueprint.md, handoff_manifest.yaml
 
 ---
@@ -143,27 +150,13 @@ Agent definitions: `os/kernel/agents/`
 
 ---
 
-## Relationship to OS Teams
+## Authority and Coherence
 
-The kernel and the OS teams form a two-layer architecture. The kernel handles structural reasoning. OS teams provide domain expertise. Neither can function well without the other.
+The Controller Architect is the single coherence owner across all 7 phases. It makes all routing decisions, owns the canonical package, manages stage transitions, and is the final authority on whether a phase output is sufficient to proceed.
 
-### How dispatch works
+No phase advances without the Controller Architect's approval. No reroute happens without the Controller Architect selecting the target stage. No package is frozen without the Controller Architect's sign-off.
 
-Kernel agents dispatch OS teams at specific phases:
-
-- **Phase 1 (Intent)**: Product team assists with requirements framing. Research team provides domain context and competitive landscape.
-- **Phase 2 (Success Model)**: Product team defines business success criteria. Research team provides industry benchmarks.
-- **Phase 3 (Architecture Search)**: Architecture team generates domain-informed candidates. Research team evaluates technology options.
-- **Phase 4 (Comparative Reasoning)**: Architecture, Security, and Data teams review candidates from their domain perspectives.
-- **Phase 5 (Structural Synthesis)**: Full team activation. Architecture owns structure. Data owns data model. Security owns threat model. DevOps owns infrastructure topology. Product owns interface design.
-- **Phase 6 (Audit)**: QA team runs quality audits. Security team runs security audits. Both feed results back to the Audit Architect.
-- **Phase 7 (Packaging)**: Commander synthesizes final output. Product team reviews documentation quality.
-
-### Authority hierarchy
-
-The Commander agent in the OS IS the Controller Architect in the kernel. This is not a mapping -- it is an identity. The Commander's role as top-level orchestrator maps directly to the Controller Architect's role as coherence owner and stage manager.
-
-OS teams report to the Commander. Kernel agents report to the Controller Architect. Because these are the same entity, there is no conflict of authority.
+All other kernel agents report to and operate under the direction of the Controller Architect.
 
 ---
 
@@ -193,6 +186,72 @@ Package template: `os/kernel/templates/final_package_template.yaml`
 
 ---
 
+## Audit Vector Mechanics
+
+Each audit vector entry carries five fields per dimension:
+
+- **score**: Numeric quality rating (0.0 -- 1.0) against the success model threshold for this dimension
+- **evidence**: Evidence strength rating (none / weak / moderate / strong) -- how well the score claim is supported
+- **uncertainty**: Uncertainty level (low / medium / high) -- how confident the rating is given available information
+- **delta**: Change from the previous audit pass (positive = improvement, negative = regression, null = first pass)
+- **status**: Pass / Fail / Watch -- whether the dimension meets threshold, fails it, or is borderline
+
+### Universal Backbone Dimensions
+
+Every project is audited against these 8 structural dimensions regardless of domain:
+
+1. **Coherence** -- all parts of the system work toward the same purpose without contradiction
+2. **Completeness** -- all necessary subsystems, interfaces, and flows are present
+3. **Consistency** -- naming, patterns, and structural conventions are uniform throughout
+4. **Adaptability** -- the system has explicit mechanisms for evolution without full redesign
+5. **Efficiency** -- no unnecessary complexity, redundancy, or resource waste
+6. **Failure Awareness** -- failure modes are identified, contained, and handled explicitly
+7. **Legibility** -- the system's intent and structure can be understood by a new reader
+8. **Implementability** -- the design can be realized by a competent team without unresolvable ambiguity
+
+Project-specific dimensions are added by the Success Model Architect during Phase 2, layered on top of these 8.
+
+---
+
+## Targeted Rerouting Logic
+
+When Phase 6 audit identifies dimensions below threshold, the Controller Architect selects a reroute target using these rules:
+
+| Failing Dimension | Likely Root Cause | Reroute Target |
+|-------------------|-------------------|----------------|
+| Coherence | Structural contradiction between subsystems | Phase 5 (Synthesis) |
+| Completeness | Missing subsystems or interfaces | Phase 5 (Synthesis) |
+| Consistency | Pattern drift or naming inconsistency | Phase 5 (Synthesis) |
+| Adaptability | No evolution paths defined | Phase 5 (Synthesis) |
+| Failure Awareness | Failure modes unanalyzed | Phase 5 (Synthesis) via Failure Mode Architect |
+| Efficiency | Over-engineering or redundancy | Phase 5 (Synthesis) via Optimization Architect |
+| Legibility | Architectural intent unclear | Phase 5 (Synthesis) |
+| Implementability | Unresolvable ambiguity | Phase 1 (Intent) or Phase 5 (Synthesis) |
+| Candidate diversity | All candidates share same structural thesis | Phase 3 (Search) |
+| Selection rationale | Winner not clearly superior | Phase 4 (Comparative Reasoning) |
+
+The Mutation Architect performs the targeted fix at the reroute stage. Every reroute is recorded in the evolution ledger with: timestamp, failing dimension(s), reroute target, agent responsible, and change summary.
+
+---
+
+## Evolution Ledger
+
+The evolution ledger is an immutable append-only log within the canonical package. It records every corrective iteration the system underwent from initial synthesis to final freeze.
+
+Each ledger entry contains:
+- **entry_id**: Sequential identifier
+- **timestamp**: When the reroute occurred
+- **trigger**: Which dimension(s) failed audit and at what score
+- **reroute_target**: Which phase was re-entered
+- **agent**: Which kernel agent performed the mutation
+- **change_summary**: What was structurally modified and why
+- **pre_scores**: Audit scores before the mutation
+- **post_scores**: Audit scores after the mutation (populated on next audit pass)
+
+The ledger is never edited or deleted. It provides a complete causal history of how the architecture reached its final form.
+
+---
+
 ## Runtime Modes
 
 The kernel adapts its behavior based on project characteristics and audit state.
@@ -204,7 +263,7 @@ Balanced exploration and correction. Default mode. Suitable for most projects.
 More candidate architectures generated. Deeper comparison. Slower convergence. Used when the problem space is novel or when early candidates show insufficient diversity.
 
 ### Conservative
-Higher audit thresholds. Stronger evidence requirements. More frequent escalation. Used for high-consequence projects where failure cost is extreme (financial systems, safety-critical systems, healthcare).
+Higher audit thresholds. Stronger evidence requirements. More frequent escalation. Used for high-consequence projects where failure cost is extreme (safety-critical systems, irreversible large-scale processes).
 
 ### Overdrive
 Activated when dimensions fall below critical adaptive thresholds during audit. Spawns focused specialist passes on weak dimensions. This is not a general mode -- it is triggered by specific audit failures and deactivated when those dimensions recover.
@@ -215,7 +274,7 @@ Mode selection is made by the Controller Architect based on consequence level, u
 
 ## Escalation Policy
 
-The kernel defaults to full autonomy. It makes all structural and technical decisions without human confirmation.
+The kernel defaults to full autonomy. It makes all structural decisions without human confirmation.
 
 Escalation occurs ONLY when ALL of the following conditions hold:
 1. Uncertainty is materially high (evidence is insufficient to distinguish options)
@@ -228,8 +287,8 @@ Examples of justified escalation:
 - Regulatory or legal constraints require human sign-off
 
 Examples of unjustified escalation:
-- Choosing between two database technologies when one clearly scores higher
-- Selecting a deployment topology when requirements are unambiguous
+- Choosing between two structural approaches when one clearly scores higher
+- Selecting a system topology when requirements are unambiguous
 - Making any decision where the kernel has sufficient evidence to proceed
 
 ---
@@ -254,7 +313,7 @@ These criteria are enforced at Phase 6 (Audit) and serve as automatic reroute tr
 
 Agents loading the SuperArchitect OS should read kernel files in this order:
 
-1. **This file** (`os/kernel/KERNEL.md`) -- understand the kernel's identity, pipeline, and relationship to OS teams
+1. **This file** (`os/kernel/KERNEL.md`) -- understand the kernel's identity, pipeline, and agent structure
 2. **Principles** (`os/kernel/principles/`) -- internalize system primitives, design laws, and world-class standard
 3. **Phase specs** (`os/kernel/phases/01-07`) -- understand each pipeline stage in depth
 4. **Agent specs** (`os/kernel/agents/`) -- understand each kernel agent's cognitive function

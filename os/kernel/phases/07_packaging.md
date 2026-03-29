@@ -93,13 +93,11 @@ If information appears in the blueprint but not in the package, it is fabricated
 
 ---
 
-## OS Team Dispatch
+## Kernel Agents
 
-### Commander (OS Orchestrator)
-Synthesizes the final output narrative. Ensures the blueprint tells a coherent story from objective through architecture through implementation guidance.
+**Primary**: Packaging Architect — owns all artifact production, normalization of the canonical package, and handoff manifest generation.
 
-### Product Team (Team 9)
-Reviews documentation quality. Ensures the blueprint is understandable by its intended audience (engineering teams, stakeholders, operators). Validates that the executive summary accurately represents the system.
+**Supporting**: Controller Architect validates that the canonical package is internally consistent, all 11 required sections are present, and the evolution ledger accurately reflects all reroute history before declaring the pipeline complete.
 
 ---
 

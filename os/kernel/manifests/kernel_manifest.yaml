@@ -205,35 +205,10 @@ kernel:
     checkpoint_frequency: "per_phase"
 
   # ---------------------------------------------------------------------------
-  # Integration with SuperArchitect OS
+  # Domain Bridge
   # ---------------------------------------------------------------------------
-  integration:
-    os_team_dispatch: true
-    commander_as_controller: true
-    blueprint_protocol_version: "2.0"
-
-    team_mappings:
-      intent_compilation:
-        - "team-9-product"
-        - "team-10-research"
-      success_model:
-        - "team-9-product"
-        - "team-10-research"
-      architecture_generation:
-        - "team-2-architecture"
-        - "team-10-research"
-      candidate_selection:
-        - "team-2-architecture"
-        - "team-7-security"
-      synthesis:
-        - "team-2-architecture"
-        - "team-3-backend"
-        - "team-4-frontend"
-        - "team-5-data"
-        - "team-6-devops"
-      audit:
-        - "team-7-security"
-        - "team-8-qa"
-      delivery:
-        - "team-6-devops"
-        - "team-1-foundation"
+  domain_bridge:
+    path: "os/kernel/integration/domain_bridge.md"
+    description: "Maps universal system primitives to domain-specific concepts across multiple fields."
+    default: "domain-agnostic"
+    note: "Domain practitioners interpret kernel outputs through their field's vocabulary. The kernel itself is domain-agnostic."

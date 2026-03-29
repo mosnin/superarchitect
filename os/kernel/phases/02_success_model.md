@@ -146,13 +146,13 @@ The success model defines minimum evidence and maximum uncertainty thresholds. D
 
 ---
 
-## OS Team Dispatch
+## Domain Context
 
-### Product Team (Team 9)
-Defines business success criteria that the kernel cannot derive from structural analysis alone. What does the business consider a successful outcome? What metrics matter? What user experience qualities are non-negotiable?
+The Success Model Architect may consult domain practitioners to ground project-specific dimensions in reality:
+- **Domain experts** provide field-specific success criteria that structural analysis alone cannot derive — clinical outcome benchmarks, regulatory thresholds, logistics performance norms, or customer experience standards.
+- **Benchmarks and standards** from the target domain set the baseline for what "world class" means. A structurally correct but domain-ignorant success model produces thresholds that are either trivially easy or impossible.
 
-### Research Team (Team 10)
-Provides competitive benchmarks. What quality levels do comparable systems achieve? What are industry-standard SLAs? What regulatory baselines apply? This grounds the success model in reality rather than abstract ideals.
+Domain context is optional input — the kernel can produce a valid success model without it, but the resulting thresholds will carry higher uncertainty.
 
 ---
 

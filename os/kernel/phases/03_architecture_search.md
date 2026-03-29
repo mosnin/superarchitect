@@ -100,15 +100,13 @@ candidate:
 
 ---
 
-## OS Team Dispatch
+## Domain Input
 
-### Architecture Team (Team 2)
-The Architecture team provides domain-informed candidate generation. While the kernel's Search Architect reasons about structural theses, the Architecture team brings knowledge of proven patterns in the target domain. For a payment system, they know about saga patterns, idempotency keys, and settlement architecture. For a collaboration platform, they know about CRDTs, operational transforms, and presence protocols.
+Domain practitioners enrich candidate generation with field-specific knowledge:
+- **Domain experts** know proven patterns in the target domain — structural patterns that have succeeded or failed in similar contexts. They do not override the kernel's structural reasoning; they ground it in domain reality.
+- **Technology and tool research** evaluates what building blocks are available for each candidate. Candidates must be grounded in available options, not purely theoretical constructs.
 
-The Architecture team does NOT override the kernel's structural reasoning. It enriches candidates with domain expertise.
-
-### Research Team (Team 10)
-Evaluates technology options for each candidate. Provides build-vs-buy analysis. Identifies emerging technologies that might enable novel architectural approaches. Ensures candidates are grounded in available technology rather than theoretical abstractions.
+Domain input is integrated after structural theses are established — not before. This prevents domain familiarity from constraining the structural search space.
 
 ---
 

@@ -1,277 +1,227 @@
-# Kernel-OS Integration Bridge
+# Domain Bridge: How the Kernel Connects to Domain Practice
 
-> The kernel provides structural reasoning. The OS provides domain expertise. Together they produce architectures that are both structurally sound and domain-excellent.
+> The kernel produces universal structural outputs. Domain practitioners interpret and act on those outputs through the lens of their field. This document explains that connection.
 
 ---
 
 ## The Key Insight
 
-The kernel is domain-agnostic. It knows about systems — their structure, coherence, completeness, and evolution — but it knows nothing about software, databases, APIs, or Kubernetes. It works with abstract primitives: purpose, boundary, input, transformation, output, interface, resource, constraint, feedback, failure mode, evolution path.
+The kernel is domain-agnostic. It reasons about systems — their structure, coherence, completeness, and evolution — without knowing anything about software, medicine, supply chains, or civil engineering. It works exclusively with abstract primitives: purpose, boundary, input, transformation, output, interface, resource, constraint, feedback loop, failure mode, evolution path.
 
-The OS teams are domain-specific. They know software deeply — they know that "interface" means REST API or gRPC, that "resource" means PostgreSQL or Redis, that "failure mode" means timeout or deadlock. But they may not naturally reason about structural coherence or systematic completeness.
+Domain practitioners are domain-specific. A software architect knows that "interface" means an API contract. A logistics planner knows it means a handoff protocol between carriers. A hospital administrator knows it means an admission intake process. Each expert translates the same structural concept into the vocabulary and practices of their field.
 
-The bridge connects these two worlds. Kernel phases provide the WHAT (what structural questions must be answered). OS teams provide the HOW (how those questions are answered in the software domain).
+The domain bridge is that translation layer. It connects the kernel's structural language to the practitioner's domain language — without modifying either.
 
 Neither is sufficient alone:
-- Kernel without OS teams = structurally perfect architecture with no domain grounding.
-- OS teams without kernel = domain-expert work that may be structurally incomplete or incoherent.
+- Kernel without domain knowledge = structurally sound architecture with no grounding in real-world constraints, tools, or practices.
+- Domain knowledge without kernel = expert work that may be structurally incomplete, incoherent, or brittle under pressure.
 
 ---
 
-## Phase-to-Team Dispatch Mapping
+## How Kernel Outputs Flow to Domain Practice
 
-This table defines which OS teams are activated at each kernel phase and what role they play.
+### The Universal Structural Output
+
+At every phase, the kernel produces outputs expressed in structural primitives. These outputs are domain-neutral by design. They describe:
+- What the system is for (intent, purpose, success criteria)
+- What the system consists of (components, boundaries, interfaces)
+- How the system behaves (transformations, feedback loops)
+- How the system can break (failure modes)
+- How the system can change (evolution paths)
+- How good the system is (audit vectors with confidence scores)
+
+### The Domain Interpretation Step
+
+A domain practitioner receives these structural outputs and interprets them through their field's vocabulary, tools, standards, and constraints. The interpretation does not change the structural facts — it gives them domain-specific meaning.
+
+The same audit finding — "failure awareness score: 0.42, below threshold 0.65" — is interpreted differently across domains:
+
+| Domain | Interpretation of Low Failure Awareness |
+|---|---|
+| Software | Missing circuit breakers, no retry logic, unhandled exception paths |
+| Healthcare | No escalation protocols, missing triage criteria, undefined handoff failures |
+| Logistics | No rerouting procedures, single-carrier dependency, no delay containment plan |
+| Organizational Design | No decision escalation path, single points of authority, no conflict resolution process |
+| Physical Infrastructure | No load redundancy, single failure point in critical path, no emergency bypass |
+
+The structural diagnosis is the same. The remediation is domain-specific.
+
+---
+
+## Phase-by-Phase: What the Kernel Produces and How Domains Use It
 
 ### Phase 1: Intent Compilation
 
-**Kernel asks**: What is this system's purpose? What problem does it solve? For whom? What are the boundaries?
+**Kernel produces**: A structured intent object containing purpose statement, identified actors, use cases, system boundary, and domain context signals.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Use the Intent Object |
 |---|---|
-| Team 9 (Product) | Translate the build request into structured requirements. Identify users, use cases, and business objectives. Define the product boundary. |
-| Team 10 (Research) | Research the problem domain. Identify prior art, competitive systems, and reference architectures. Surface constraints the requester may not have mentioned. |
+| Software | Validate product requirements, confirm user personas, identify technical constraints not stated in the request |
+| Healthcare | Map purpose to clinical workflow, identify patient populations, surface regulatory context (HIPAA, clinical protocols) |
+| Logistics | Identify origin-destination pairs, cargo types, time constraints, regulatory crossing requirements |
+| Organizational Design | Clarify mission scope, identify stakeholder groups, surface cultural or political constraints |
+| Physical Infrastructure | Define service area, identify load populations, surface environmental and regulatory requirements |
 
-**Output flows to kernel**: Structured intent document with purpose, users, use cases, boundaries, and domain context.
+---
 
 ### Phase 2: Success Model
 
-**Kernel asks**: How do we measure success? What are the thresholds? What quality dimensions matter most?
+**Kernel produces**: A success model with measurable dimensions, pass thresholds, and quality dimension priorities.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Use the Success Model |
 |---|---|
-| Team 9 (Product) | Define user-facing success metrics (performance, reliability, usability targets). Prioritize quality dimensions from the user's perspective. |
-| Team 10 (Research) | Provide industry benchmarks and comparable system metrics. Ground the success criteria in reality. |
+| Software | Set SLAs (latency p99, uptime %, error rate), define user satisfaction metrics, establish security compliance targets |
+| Healthcare | Define clinical outcome benchmarks, patient safety thresholds, throughput and wait-time targets |
+| Logistics | Set on-time delivery targets, damage rate thresholds, cost-per-unit benchmarks, carbon footprint limits |
+| Organizational Design | Define decision speed targets, employee engagement thresholds, cross-team collaboration metrics |
+| Physical Infrastructure | Set capacity margins, safety factors, maintenance cycle targets, energy efficiency benchmarks |
 
-**Output flows to kernel**: Success model with measurable criteria, thresholds, and quality dimension priorities that feed into `threshold_logic.md`.
+---
 
-### Phase 3: Architecture Search
+### Phase 3: Architecture Generation
 
-**Kernel asks**: What are 3+ structurally different approaches to building this system?
+**Kernel produces**: 2-4 structurally distinct candidate architectures, each representing a different structural thesis for solving the intent.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Interpret Candidates |
 |---|---|
-| Team 2 (Architecture) | Generate candidate architectures using domain patterns (microservices, modular monolith, event-driven, serverless, etc.). Each candidate must be structurally distinct. Apply patterns from `os/patterns/architectural/`. |
+| Software | Microservices vs. modular monolith vs. event-driven — practitioners evaluate operational feasibility, team fit, technology availability |
+| Healthcare | Centralized care model vs. distributed care network vs. hybrid — practitioners evaluate staffing, facility constraints, patient access |
+| Logistics | Hub-and-spoke vs. point-to-point vs. relay network — practitioners evaluate fleet utilization, route economics, service level tradeoffs |
+| Organizational Design | Hierarchical vs. flat vs. matrix structure — practitioners evaluate communication overhead, accountability clarity, scalability |
+| Physical Infrastructure | Single large facility vs. distributed nodes vs. linear network — practitioners evaluate cost, redundancy, geographic coverage |
 
-**Output flows to kernel**: 3+ candidate architecture descriptions, each with component inventory, interface definitions, technology choices, and trade-off analysis.
+---
 
-### Phase 4: Comparative Reasoning
+### Phase 4: Candidate Selection
 
-**Kernel asks**: Which candidate best satisfies the success model? Score each against the 8 audit dimensions.
+**Kernel produces**: A scored comparison matrix with structural rationale for the recommended candidate or hybridization.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Use the Comparison Matrix |
 |---|---|
-| Team 2 (Architecture) | Evaluate architectural fitness of each candidate. Score coherence, completeness, adaptability, efficiency. |
-| Team 7 (Security) | Evaluate security posture of each candidate. Score failure awareness from a security perspective. Identify attack surface differences. |
-| Team 5 (Data) | Evaluate data architecture of each candidate. Score data integrity, consistency, and scalability. |
+| Software | Validate structural scores with domain-specific feasibility: team skills, vendor availability, operational runbook complexity |
+| Healthcare | Cross-reference structural scores with clinical workflow compatibility, staff training requirements, patient impact |
+| Logistics | Validate against contractual constraints, carrier relationships, regulatory approval timelines |
+| Organizational Design | Check scores against change management capacity, leadership bandwidth, cultural readiness |
+| Physical Infrastructure | Validate against permitting timelines, material lead times, contractor availability |
 
-**Output flows to kernel**: Per-candidate score matrix with domain-specific justifications. Kernel combines with structural scoring to select the winner.
+---
 
 ### Phase 5: Structural Synthesis
 
-**Kernel asks**: Elaborate the selected candidate into a complete, detailed architecture with all primitives defined.
+**Kernel produces**: A fully elaborated architecture with all primitives defined — every component, interface, resource, constraint, feedback loop, and failure mode specified.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Use the Synthesis |
 |---|---|
-| Team 2 (Architecture) | Produce the detailed architecture: service decomposition, component design, data flow diagrams, integration patterns. |
-| Team 5 (Data) | Design the data model, storage strategy, data flow, and data quality mechanisms. |
-| Team 7 (Security) | Define authentication, authorization, encryption, secret management, and threat model. |
-| Team 6 (DevOps) | Define infrastructure architecture, deployment strategy, CI/CD pipeline, monitoring stack. |
-| Team 4 (Frontend) | Define the frontend architecture, component hierarchy, state management, and API consumption patterns (if applicable). |
+| Software | Translate into service specifications, API contracts, infrastructure-as-code, data models, deployment plans |
+| Healthcare | Translate into care pathway documents, staffing plans, facility layouts, equipment procurement lists, protocol manuals |
+| Logistics | Translate into route plans, carrier contracts, warehouse layouts, tracking system requirements, contingency procedures |
+| Organizational Design | Translate into org charts, RACI matrices, job descriptions, decision rights documents, governance charters |
+| Physical Infrastructure | Translate into engineering drawings, material specifications, construction schedules, safety inspection plans |
 
-**Output flows to kernel**: Complete architecture document covering all system primitives. This is the most heavily staffed phase.
+---
 
 ### Phase 6: Audit
 
-**Kernel asks**: Does this architecture pass all 8 audit dimensions?
+**Kernel produces**: Confidence vectors for all audit dimensions, flagging dimensions that fall below threshold and recommending reroute targets.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Use Audit Vectors |
 |---|---|
-| Team 8 (QA) | Evaluate testability, test strategy feasibility, and coverage potential. Contribute to completeness and implementability scores. |
-| Team 7 (Security) | Security-focused audit. Contribute to failure awareness, internal consistency (security assumptions), and completeness (security primitives). |
-| Team 2 (Architecture) | Architectural review. Contribute to coherence, efficiency, adaptability, and legibility scores. |
+| Software | Translate low-scoring dimensions into specific technical gaps: missing circuit breakers, inadequate test coverage, unversioned APIs |
+| Healthcare | Translate low scores into clinical protocol gaps: undefined escalation paths, missing patient safety checkpoints |
+| Logistics | Translate low scores into operational gaps: single-carrier risk, missing delay protocols, inadequate tracking |
+| Organizational Design | Translate low scores into governance gaps: unclear decision rights, missing conflict resolution paths |
+| Physical Infrastructure | Translate low scores into engineering gaps: insufficient redundancy, missing safety margins, inadequate inspection plans |
 
-**Output flows to kernel**: Domain-grounded confidence vectors for all 8 dimensions. The kernel aggregates these with its structural assessment to produce the final audit result.
+---
 
-### Phase 7: Packaging
+### Phase 7: Delivery
 
-**Kernel asks**: Compile everything into the canonical system package.
+**Kernel produces**: A canonical system package — the complete, structured artifact containing intent, success model, candidates, selection rationale, synthesis, audit results, and evolution ledger.
 
-**OS teams dispatched**:
-| Team | Role in This Phase |
+**How domain practitioners use it**:
+
+| Domain | How They Use the Canonical Package |
 |---|---|
-| Commander | Orchestrate the final assembly. Ensure all artifacts are present and consistent. |
-| Team 4 (Frontend) | Produce UI/UX documentation and design system artifacts (if applicable). |
-
-**Output flows to kernel**: Complete canonical system package ready for delivery.
-
----
-
-## Message Protocol
-
-Communication between kernel phases and OS teams extends the protocol defined in `os/commander/protocols.md`.
-
-### Kernel-to-Team Dispatch Message
-
-```json
-{
-  "type": "KERNEL_DISPATCH",
-  "from": "kernel.controller",
-  "to": "os.team.<team_number>",
-  "phase": "PHASE_3",
-  "iteration": 2,
-  "task": {
-    "description": "Generate 3 structurally distinct candidate architectures for the system described in the intent document.",
-    "constraints": [
-      "Each candidate must use a different architectural style.",
-      "Each candidate must address all system primitives identified in Phase 1.",
-      "Candidates must be feasible with the technology constraints from the success model."
-    ],
-    "inputs": {
-      "intent_document": "...",
-      "success_model": "...",
-      "reroute_context": null
-    },
-    "expected_output_format": "candidate_architecture_set",
-    "deadline": "phase_budget"
-  }
-}
-```
-
-### Team-to-Kernel Result Message
-
-```json
-{
-  "type": "KERNEL_RESULT",
-  "from": "os.team.2",
-  "to": "kernel.controller",
-  "phase": "PHASE_3",
-  "iteration": 2,
-  "result": {
-    "status": "complete",
-    "artifacts": [ ... ],
-    "confidence": 0.85,
-    "unresolved_questions": [],
-    "handoff_notes": "Candidate B uses an event-driven pattern that requires the team to evaluate message broker options in Phase 5."
-  }
-}
-```
-
-### Reroute Context Message
-
-When a team is re-activated due to a reroute, it receives additional context:
-
-```json
-{
-  "type": "KERNEL_DISPATCH",
-  "reroute": true,
-  "reroute_context": {
-    "failed_dimensions": ["failure_awareness"],
-    "specific_feedback": "The architecture lacks circuit breakers between the payment and order services. The cascading failure path is uncontained.",
-    "previous_attempt_summary": "First attempt defined failure modes but did not add containment. Second attempt must add structural containment.",
-    "evolution_ledger_excerpt": [ ... ]
-  }
-}
-```
+| Software | The package becomes the system blueprint: architecture document, API specs, infrastructure plan, onboarding guide |
+| Healthcare | The package becomes the care program design: clinical protocols, staffing model, facility plan, training curriculum |
+| Logistics | The package becomes the operations manual: route network design, carrier SLAs, contingency playbooks, tracking specs |
+| Organizational Design | The package becomes the transformation plan: target org structure, transition roadmap, governance framework, change management plan |
+| Physical Infrastructure | The package becomes the project brief: engineering specifications, construction plan, commissioning checklist, operations manual |
 
 ---
 
-## Context Passing
+## Conflict Resolution Across the Bridge
 
-### What Flows from Kernel to Teams
+When kernel structural requirements appear to conflict with domain best practices, the following hierarchy applies:
 
-| Context | Description | Available From |
-|---|---|---|
-| Build request | Original human request | Phase 1 onward |
-| Intent document | Structured purpose, users, boundaries | Phase 2 onward |
-| Success model | Measurable criteria and thresholds | Phase 3 onward |
-| Candidate architectures | All generated candidates | Phase 4 onward |
-| Selected candidate | The winning architecture | Phase 5 onward |
-| Detailed architecture | Full structural synthesis output | Phase 6 onward |
-| Audit results | Confidence vectors for all dimensions | Phase 7 (and reroute targets) |
-| Evolution ledger | History of reroutes and mutations | All rerouted phases |
-| Reroute instructions | What to fix and why | Rerouted phases only |
+1. **Safety and integrity requirements win unconditionally.** If a structural optimization conflicts with a domain safety requirement, the safety requirement takes precedence. This is non-negotiable in any domain.
 
-### What Flows from Teams to Kernel
+2. **Explicit trade-offs are documented.** When structural efficiency conflicts with domain operational practice, the trade-off is recorded in the evolution ledger with rationale. Neither side silently overrides the other.
 
-| Context | Description | Produced By |
-|---|---|---|
-| Phase artifacts | The primary output of the phase (designs, evaluations, audits) | All teams |
-| Confidence assessment | How confident the team is in its output | All teams |
-| Unresolved questions | Issues the team identified but could not resolve | All teams |
-| Handoff notes | Information the next phase needs to know | All teams |
-| Domain warnings | Domain-specific risks or concerns | Specialist teams (Security, Data) |
+3. **The kernel defers to domain expertise on domain correctness.** The kernel evaluates the structural quality of a design — coherence, completeness, adaptability — not whether a clinical protocol is medically sound or a logistics route is operationally feasible. Domain practitioners own domain correctness.
+
+4. **Domain practitioners defer to the kernel on structural quality.** If a domain expert proposes a design that is structurally incoherent — components that do not connect, interfaces without contracts, feedback loops that terminate nowhere — the kernel's structural assessment governs.
+
+5. **Unresolvable conflicts escalate.** If structural and domain requirements genuinely cannot be reconciled, the conflict surfaces to a human decision-maker. Neither the kernel nor the domain practitioner resolves it unilaterally.
 
 ---
 
-## Conflict Resolution
+## The Controller's Dual Role
 
-When kernel structural requirements conflict with domain best practices:
+The Controller Architect runs the kernel's pipeline loop as its primary control flow. At each phase, it coordinates domain practitioners to provide domain-specific interpretation and elaboration of structural outputs. The loop does not advance until all domain contributions for the current phase are integrated.
 
-### Resolution Hierarchy
-
-1. **Safety and security requirements win**. If the kernel's structural optimization conflicts with a security requirement, security wins. Non-negotiable.
-
-2. **Explicit trade-offs are documented**. If efficiency (kernel) conflicts with operational best practice (OS team), the trade-off is documented in the evolution ledger and the decision record.
-
-3. **The kernel defers to domain expertise on domain matters**. The kernel does not override the Security team's authentication design or the Data team's consistency model. The kernel evaluates the STRUCTURAL quality of these designs, not the domain correctness.
-
-4. **Domain teams defer to the kernel on structural matters**. If the Architecture team proposes a design that is structurally incoherent (components do not connect, interfaces do not match), the kernel's structural assessment takes precedence.
-
-5. **Unresolvable conflicts escalate**. If the kernel and a domain team fundamentally disagree and neither can defer, the conflict is escalated to the human operator.
+The Controller does not need to understand the domain deeply. It needs to understand the structure of domain contributions: whether they are complete, consistent with accumulated context, and sufficient to ground the kernel's structural outputs in domain reality.
 
 ---
 
-## The Commander's Dual Role
+## Canonical Package as Universal Artifact
 
-The Commander agent serves as both:
+The canonical system package produced by the kernel is the same artifact regardless of domain. Its structure — intent, success model, candidates, evaluation, synthesis, audit, evolution ledger, outputs — is universal. What varies is the content within each field, which is expressed in domain-specific terms.
 
-1. **The Controller Architect** — running the kernel's controller loop, managing phase transitions, evaluating audit results, and computing reroute targets.
-2. **The OS Orchestrator** — dispatching OS teams, managing inter-team dependencies, synthesizing team outputs, and enforcing OS standards.
+| Canonical Package Field | What It Contains Across Domains |
+|---|---|
+| `intent` | Purpose and actors — expressed in domain vocabulary |
+| `success_model` | Measurable criteria — using domain-specific metrics and thresholds |
+| `candidates` | Structural alternatives — described using domain patterns and tools |
+| `evaluation` | Scoring rationale — grounded in domain-specific feasibility |
+| `synthesis` | Detailed architecture — elaborated using domain conventions |
+| `audit_results` | Confidence vectors — interpreted through domain failure modes |
+| `evolution` | Change history — documented using domain change management vocabulary |
+| `outputs` | Deliverable artifacts — formatted for domain practitioners |
 
-These are not separate agents. They are the same agent wearing two hats. This is by design:
-- The Controller needs to understand domain context to make good reroute decisions.
-- The OS Orchestrator needs to understand structural quality to dispatch the right teams.
-- Separating them would create a coordination overhead with no benefit.
-
-**Execution model**: The Commander runs the kernel loop as its primary control flow. At each phase, it dispatches OS teams as sub-tasks within the phase. The loop does not advance until all dispatched teams return results.
-
----
-
-## Canonical Package and Blueprint Protocol: Unified
-
-The kernel's canonical system package and the OS's Blueprint Protocol are the SAME artifact, viewed from two perspectives:
-
-| Kernel View (Structural) | OS View (Domain) | Unified Field |
-|---|---|---|
-| System identity | Project metadata | `identity` |
-| System primitives | Architecture document | `architecture` |
-| Candidate set | Design alternatives | `candidates` |
-| Comparison matrix | Architecture decision record | `evaluation` |
-| Audit vectors | Quality assessment | `audit_results` |
-| Evolution ledger | Design history | `evolution` |
-| Packaging metadata | Deliverable manifest | `package_metadata` |
-
-The canonical package IS the blueprint. When the kernel finalizes the package, the OS delivers it as the system blueprint. No translation is needed — they were always the same thing.
+The package is the bridge made artifact. It contains both the structural logic (from the kernel) and the domain expression (from practitioners) in a single coherent document.
 
 ---
 
-## Integration Verification
+## Creating a Domain-Specific Bridge
 
-After every phase, the bridge verifies integration integrity:
+To formalize how the kernel connects to a new domain:
 
-1. **Schema compliance**: Team outputs conform to the expected format for the current phase.
-2. **Context consistency**: Team outputs do not contradict the accumulated context from previous phases.
-3. **Completeness**: All dispatched teams have returned results. No silent failures.
-4. **Merge compatibility**: Multiple team outputs for the same phase can be merged without conflict.
+1. **Map all 11 system primitives** to domain-specific concepts. Every primitive must have at least one concrete, actionable translation in the target domain.
 
-Integration failures are treated as phase validation failures and trigger a retry before advancing.
+2. **Identify the practitioner roles** who interpret and act on kernel outputs at each phase. These are the domain equivalents of the kernel's specialist agents.
+
+3. **Define domain-specific audit evidence**. The 8 universal audit dimensions apply in every domain, but the evidence and measurement methods are domain-specific. Define what "coherent" and "complete" mean in the target domain.
+
+4. **Document characteristic failure modes** for the domain. These ground the kernel's generic failure mode reasoning in domain-specific risk patterns.
+
+5. **Define the deliverable format** for the canonical package in this domain — what documents, artifacts, or specifications the package translates into for downstream practitioners.
+
+6. **Register the bridge** in the kernel manifest so the Controller can load it based on the domain classification in the intent object.
 
 ---
 
-*Kernel-OS Integration Bridge v1.0 — Kernel Integration Layer*
+*Domain Bridge — Kernel Integration Layer v1.1*
+*This document replaces the previous software-specific kernel_os_bridge.md.*

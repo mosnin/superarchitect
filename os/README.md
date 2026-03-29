@@ -1,390 +1,233 @@
-# SuperArchitect OS — Directory Guide
+# Universal Systems Kernel — Directory Guide
 
-> *A complete reference for every file in the OS, how teams collaborate, and how to extend the system.*
+> A complete reference for the kernel's file structure and the purpose of each directory and file.
 
 ---
 
 ## Purpose of This Document
 
-This guide is the definitive reference for navigating the SuperArchitect OS file system. It documents every directory, every file, and the intent behind each. Any agent or human engineer working with this OS should read this document before exploring the directory tree.
+This guide is the definitive reference for navigating the kernel's file system. It documents every directory, the files it contains, and the intent behind each. Any agent activating the kernel should read this document alongside `CLAUDE.md` before exploring the directory tree.
 
 ---
 
-## Full Annotated Directory Tree
+## Directory Tree
 
 ```
-superarchitect/
-│
-├── CLAUDE.md
-│   The root OS manifest. The single most important file. Reading this file
-│   activates the OS and transforms the AI agent into the SuperArchitect
-│   Commander. Contains: OS identity, core principles, agent hierarchy,
-│   architecture overview, boot sequence, quick start commands, and the
-│   complete operating instructions.
-│
-└── os/
-    │
-    ├── README.md  (this file)
-    │   The directory guide. Annotates every file and directory.
-    │   Reference for orientation, collaboration patterns, and extension.
-    │
-    ├── manifest.md
-    │   The OS configuration manifest. Machine-readable registry of all teams,
-    │   workflows, standards, adapters, and global constants. The Commander
-    │   loads this file during boot to initialize its internal registry.
-    │
-    ├── commander/
-    │   The Commander agent's operational files. This directory contains
-    │   everything needed to fully instantiate and operate the Commander.
-    │   │
-    │   ├── COMMANDER.md
-    │   │   The Commander's persona, responsibilities, decision authority,
-    │   │   dispatch rules, synthesis protocol, quality gates, escalation
-    │   │   protocol, and communication format. This is the Commander's
-    │   │   primary instruction set.
-    │   │
-    │   ├── dispatch.md
-    │   │   Task classification taxonomy, routing decision trees, parallel
-    │   │   vs. sequential dispatch rules, dependency graph management,
-    │   │   load balancing heuristics, priority levels, and example
-    │   │   dispatch scenarios for different system types.
-    │   │
-    │   └── protocols.md
-    │       Inter-agent communication protocols: message schema, message
-    │       types, handoff protocol, context passing format, error handling,
-    │       retry/recovery protocol, agent state machine, and output
-    │       versioning.
-    │
-    ├── teams/
-    │   One subdirectory per specialist team. Each team directory contains
-    │   the team's persona file, capability map, and standard operating
-    │   procedures.
-    │   │
-    │   ├── team-1-foundation/
-    │   │   ├── FOUNDATION.md       # Team persona and OS ownership responsibilities
-    │   │   └── sop.md              # Standard operating procedures for OS maintenance
-    │   │
-    │   ├── team-2-architecture/
-    │   │   ├── ARCHITECTURE.md     # Team persona: system design, ADRs, blueprints
-    │   │   ├── templates/
-    │   │   │   ├── adr-template.md         # Architecture Decision Record template
-    │   │   │   ├── system-design.md        # System design document template
-    │   │   │   └── api-contract.md         # API contract template
-    │   │   └── patterns-index.md           # Index of architectural patterns this team uses
-    │   │
-    │   ├── team-3-backend/
-    │   │   ├── BACKEND.md          # Team persona: APIs, services, data layers
-    │   │   ├── templates/
-    │   │   │   ├── service-spec.md         # Service specification template
-    │   │   │   └── api-implementation.md   # API implementation checklist
-    │   │   └── tech-stack-defaults.md      # Default technology choices per project type
-    │   │
-    │   ├── team-4-frontend/
-    │   │   ├── FRONTEND.md         # Team persona: web, mobile, design systems
-    │   │   ├── templates/
-    │   │   │   ├── component-spec.md       # Component specification template
-    │   │   │   └── ux-checklist.md         # UX quality checklist
-    │   │   └── accessibility-baseline.md   # Accessibility requirements (WCAG 2.1 AA)
-    │   │
-    │   ├── team-5-data/
-    │   │   ├── DATA.md             # Team persona: pipelines, ML, analytics
-    │   │   ├── templates/
-    │   │   │   ├── pipeline-spec.md        # Data pipeline specification template
-    │   │   │   └── ml-model-card.md        # ML model documentation template
-    │   │   └── data-quality-standards.md   # Data quality expectations
-    │   │
-    │   ├── team-6-devops/
-    │   │   ├── DEVOPS.md           # Team persona: CI/CD, infra, observability
-    │   │   ├── templates/
-    │   │   │   ├── pipeline-spec.md        # CI/CD pipeline specification template
-    │   │   │   └── infra-spec.md           # Infrastructure specification template
-    │   │   └── platform-defaults.md        # Default platform and tooling choices
-    │   │
-    │   ├── team-7-security/
-    │   │   ├── SECURITY.md         # Team persona: threat modeling, auth, compliance
-    │   │   ├── templates/
-    │   │   │   ├── threat-model.md         # Threat model template
-    │   │   │   └── security-review.md      # Security review checklist
-    │   │   └── compliance-matrix.md        # Compliance framework coverage matrix
-    │   │
-    │   ├── team-8-qa/
-    │   │   ├── QA.md               # Team persona: test strategy, quality gates
-    │   │   ├── templates/
-    │   │   │   ├── test-plan.md            # Test plan template
-    │   │   │   └── test-report.md          # Test results report template
-    │   │   └── coverage-requirements.md    # Minimum coverage thresholds
-    │   │
-    │   ├── team-9-product/
-    │   │   ├── PRODUCT.md          # Team persona: UX research, product design
-    │   │   ├── templates/
-    │   │   │   ├── user-story.md           # User story template
-    │   │   │   └── product-brief.md        # Product brief template
-    │   │   └── design-principles.md        # Product design principles
-    │   │
-    │   └── team-10-research/
-    │       ├── RESEARCH.md         # Team persona: tech evaluation, knowledge synthesis
-    │       ├── templates/
-    │       │   └── research-report.md      # Research report template
-    │       └── evaluation-criteria.md      # Technology evaluation criteria
-    │
-    ├── workflows/
-    │   Executable multi-phase build and audit workflows. Each workflow
-    │   specifies exactly which teams are activated, in what order, and
-    │   with what dependencies.
-    │   │
-    │   ├── build-saas.md
-    │   │   Full build workflow for SaaS products. Covers: product definition,
-    │   │   system architecture, backend APIs, frontend UI, data layer,
-    │   │   infrastructure, security hardening, testing, and deployment.
-    │   │
-    │   ├── build-ai-platform.md
-    │   │   Build workflow for AI/ML platforms. Extends build-saas.md with
-    │   │   additional phases for: model selection, training pipeline, inference
-    │   │   infrastructure, feature stores, evaluation harnesses, and MLOps.
-    │   │
-    │   ├── build-enterprise.md
-    │   │   Build workflow for enterprise microservices systems. Covers:
-    │   │   domain decomposition, service mesh, API gateway, event streaming,
-    │   │   multi-region deployment, compliance controls, and runbook creation.
-    │   │
-    │   ├── build-data-pipeline.md
-    │   │   Build workflow for data engineering systems. Covers: data source
-    │   │   analysis, pipeline architecture, transformation logic, quality
-    │   │   checks, monitoring, and data catalog.
-    │   │
-    │   └── audit-system.md
-    │       Audit workflow for existing systems. Covers: architecture review,
-    │       code quality analysis, security audit, dependency audit, performance
-    │       analysis, test coverage review, and remediation planning.
-    │
-    ├── standards/
-    │   Non-negotiable quality and engineering standards. All teams reference
-    │   these standards when producing outputs. They define the floor, not
-    │   the ceiling.
-    │   │
-    │   ├── code-quality.md
-    │   │   Naming conventions, complexity limits, comment standards, linter
-    │   │   configurations, code review criteria, and refactoring triggers.
-    │   │
-    │   ├── api-design.md
-    │   │   REST API design rules, GraphQL schema conventions, versioning
-    │   │   strategy, error response format, pagination standards, rate
-    │   │   limiting requirements, and OpenAPI documentation requirements.
-    │   │
-    │   ├── security-baseline.md
-    │   │   Minimum security requirements: authentication, authorization,
-    │   │   input validation, secret management, TLS requirements, audit
-    │   │   logging, and vulnerability scanning.
-    │   │
-    │   ├── testing-standards.md
-    │   │   Coverage requirements, test naming conventions, test isolation
-    │   │   rules, mock usage guidelines, fixture management, test data
-    │   │   strategy, and CI gate thresholds.
-    │   │
-    │   └── documentation.md
-    │       README requirements, inline documentation standards, API
-    │       reference requirements, ADR format, runbook structure, and
-    │       onboarding guide checklist.
-    │
-    ├── patterns/
-    │   A curated library of architectural and implementation patterns.
-    │   Teams reference patterns rather than reinventing solutions.
-    │   │
-    │   ├── architectural/
-    │   │   ├── event-sourcing.md
-    │   │   ├── cqrs.md
-    │   │   ├── saga.md
-    │   │   ├── api-gateway.md
-    │   │   ├── strangler-fig.md
-    │   │   ├── sidecar.md
-    │   │   └── bulkhead.md
-    │   │
-    │   ├── implementation/
-    │   │   ├── repository.md
-    │   │   ├── unit-of-work.md
-    │   │   ├── circuit-breaker.md
-    │   │   ├── outbox.md
-    │   │   └── feature-flags.md
-    │   │
-    │   └── anti-patterns/
-    │       ├── distributed-monolith.md
-    │       ├── god-service.md
-    │       ├── chatty-api.md
-    │       ├── shared-database.md
-    │       └── magic-strings.md
-    │
-    ├── knowledge/
-    │   The OS knowledge base. Growing library of case studies, technology
-    │   evaluations, and decision records that ground OS decisions in
-    │   real-world evidence.
-    │   │
-    │   ├── case-studies/
-    │   │   Analyzed real-world system architectures documenting design
-    │   │   decisions, trade-offs, and lessons learned.
-    │   │
-    │   ├── tech-radar/
-    │   │   Technology evaluations organized by category (languages, frameworks,
-    │   │   databases, cloud services, tooling). Each entry includes: verdict
-    │   │   (adopt/trial/assess/hold), rationale, and use-case fit.
-    │   │
-    │   └── decision-records/
-    │       Templates and completed ADRs from past builds. Used by the
-    │       Architecture team to avoid re-litigating settled decisions.
-    │
-    └── adapters/
-        Runtime adapters for non-Claude environments. Each adapter translates
-        the OS's native protocol into the instruction format of the target runtime.
-        │
-        ├── openai-codex.md
-        │   Adapter for OpenAI Codex. Translates TASK messages into Codex
-        │   prompt chains. Documents capability gaps and workarounds.
-        │
-        ├── gemini.md
-        │   Adapter for Google Gemini. Handles context window management
-        │   differences and tool-use translation.
-        │
-        └── local-llm.md
-            Adapter for local LLMs (Ollama, LM Studio). Includes capability
-            tiering guidance (which tasks require a capable model vs. which
-            can run on smaller models).
+os/kernel/
+├── KERNEL.md           # Operating manual
+├── phases/             # 7-phase pipeline
+├── agents/             # 11 cognitive agents
+├── principles/         # Design laws and primitives
+├── schemas/            # Canonical object schemas
+├── templates/          # Pipeline artifact templates
+├── manifests/          # Kernel configuration
+├── audits/             # Audit backbone and reroute logic
+├── runtime/            # Controller loop and modes
+├── docs/               # Walkthroughs and examples
+└── projects/           # Example canonical packages
 ```
 
 ---
 
-## How Teams Collaborate
+## Directory Descriptions
 
-Teams in SuperArchitect OS do not operate in isolation. They are coordinated by the Commander and communicate through structured messages. Here is the canonical collaboration model:
+### `KERNEL.md`
 
-### Phase-Based Collaboration
+The kernel's primary operating manual. Contains the full pipeline specification, agent table, audit vector mechanics, reroute logic, iteration modes, escalation policy, anti-slop criteria, and a complete file map. Every agent activating the kernel must read this file in full before beginning any pipeline phase.
 
-Most workflows divide work into phases. Teams within the same phase can work in parallel; teams in subsequent phases depend on outputs from prior phases.
+---
 
-**Example: SaaS Build (simplified)**
+### `phases/`
+
+One specification file per pipeline phase. Each file defines the phase's inputs, outputs, agent assignments, responsibilities, failure conditions, and handoff format.
+
 ```
-Phase 1 (parallel):   Team 9 (Product brief) + Team 10 (Tech research)
-Phase 2 (sequential): Team 2 (Architecture — depends on Phase 1)
-Phase 3 (parallel):   Team 3 (Backend) + Team 4 (Frontend) + Team 5 (Data)
-                       — all depend on Phase 2 architecture blueprint
-Phase 4 (parallel):   Team 6 (DevOps) + Team 7 (Security) + Team 8 (QA)
-                       — can start with partial Phase 3 output
-Phase 5 (sequential): Commander synthesis — depends on all Phase 4 complete
+phases/
+  01_intent_compilation.md       # Phase 1: raw request → structured intent object
+  02_success_model.md            # Phase 2: intent → project-specific quality dimensions
+  03_architecture_search.md      # Phase 3: generate genuinely different structural candidates
+  04_comparative_reasoning.md    # Phase 4: score, rank, and select or hybridize candidates
+  05_structural_synthesis.md     # Phase 5: winning thesis → complete system geometry
+  06_audit_and_routing.md        # Phase 6: measure quality vectors; reroute on failure
+  07_packaging.md                # Phase 7: freeze package; emit blueprint and handoff manifest
 ```
 
-### Context Handoff
-
-When Team A's output becomes Team B's input, the Commander packages Team A's results as a CONTEXT block and prepends it to Team B's TASK message. Teams never read each other's files directly — all context flows through the Commander.
-
-### Conflict Resolution
-
-When two teams produce conflicting outputs (e.g., Architecture specifies PostgreSQL, Backend proposes MongoDB), the Commander holds a synthesis session: reviewing both justifications, consulting the relevant pattern and standard files, and making a binding decision documented in the ADR log.
-
-### Review Loops
-
-Any team can request a QUERY to another team to resolve ambiguity. Queries are routed through the Commander. The queried team responds within its current activation context. Excessive queries (more than 3 per task) trigger an escalation — it signals insufficient context in the original task dispatch.
+Phase files are read sequentially as the pipeline advances. They must not be skipped or reordered.
 
 ---
 
-## How to Extend the OS
+### `agents/`
 
-### Adding a New Team
+One definition file per kernel agent. Each file specifies the agent's cognitive function, activation conditions, inputs, outputs, decision authority, and interaction with other agents. Agents are cognitive roles, not personas.
 
-1. Create directory: `os/teams/team-N-name/`
-2. Create team persona file: `os/teams/team-N-name/TEAMNAME.md`
-   - Follow the structure of existing team files
-   - Define: identity, capabilities, trigger conditions, input schema, output schema, quality checklist
-3. Create SOP file: `os/teams/team-N-name/sop.md`
-4. Register the team in `os/manifest.md` under `team_registry`
-5. Update `os/commander/dispatch.md` to include routing rules for the new team
-6. Update `CLAUDE.md` Agent Hierarchy section
-
-### Adding a New Workflow
-
-1. Create workflow file: `os/workflows/workflow-name.md`
-   - Define: trigger, input schema, phases, team assignments, quality gates, output schema
-2. Register in `os/manifest.md` under `workflow_registry`
-3. Update `CLAUDE.md` Quick Start table if it is a top-level command
-
-### Adding a New Pattern
-
-1. Determine the pattern category (architectural, implementation, or anti-pattern)
-2. Create: `os/patterns/[category]/[pattern-name].md`
-   - Include: intent, motivation, structure, participants, consequences, known uses, related patterns
-3. Update the patterns index in the relevant team files that should reference this pattern
-
-### Adding a New Standard
-
-1. Create: `os/standards/[standard-name].md`
-2. Update team files that must comply with this standard to reference it
-3. Update the standards registry in `os/manifest.md`
-
-### Adding a New Adapter
-
-1. Create: `os/adapters/[runtime-name].md`
-   - Document: capability map, message translation rules, context window limits, known gaps
-2. Register in `os/manifest.md` under `adapter_registry`
-3. Update `CLAUDE.md` Runtime Support section
+```
+agents/
+  controller_architect.md        # Coherence owner, routing authority, package steward
+  intent_analyst.md              # Objective extraction, ambiguity mapping, consequence rating
+  success_model_architect.md     # Quality dimension derivation, threshold setting
+  search_architect.md            # Candidate generation, structural thesis variation
+  comparative_reasoner.md        # Scoring, ranking, tradeoff matrix, selection
+  synthesis_architect.md         # System geometry: subsystems, interfaces, flows
+  failure_mode_architect.md      # Adversarial testing, breakdown and drift analysis
+  optimization_architect.md      # Elegance, efficiency, simplification
+  audit_architect.md             # Vector production, evidence grading, reroute targeting
+  mutation_architect.md          # Surgical corrective changes at reroute stage
+  packaging_architect.md         # Package normalization, blueprint, handoff manifest
+```
 
 ---
 
-## Versioning Philosophy
+### `principles/`
 
-### OS Versioning
+The foundational reasoning rules that govern all kernel behavior. These files define the universal building blocks the kernel uses to reason about any system, the laws that constrain how it operates, and the standard by which it measures output quality.
 
-SuperArchitect OS uses semantic versioning: `MAJOR.MINOR.PATCH`
+```
+principles/
+  system_primitives.md           # 11 universal primitives present in every system
+  design_laws.md                 # 10 kernel design laws — non-negotiable operating rules
+  world_class_standard.md        # Definition of world-class and how the kernel measures it
+```
 
-- **MAJOR**: Incompatible changes to the Commander protocol, message schema, or core architecture
-- **MINOR**: New teams, workflows, patterns, or standards added in a backward-compatible way
-- **PATCH**: Bug fixes, clarifications, documentation improvements, and minor corrections
-
-The current version is recorded in `os/manifest.md`. All files carry the OS version at which they were created or last significantly modified.
-
-### Artifact Versioning
-
-Every artifact produced during a build (architecture blueprints, API contracts, infrastructure specs) is versioned using the timestamp and a short hash. This enables:
-- Resuming interrupted builds from a known state
-- Comparing outputs across multiple build runs
-- Rolling back to a prior design if a new direction proves unworkable
-
-### Team File Versioning
-
-Team persona files and SOPs are versioned alongside the OS. When a team's capabilities expand, its file is updated and the minor version is incremented. Breaking changes to team interfaces increment the major version.
+Agents must internalize these principles before executing any phase. They are not reference material — they are active constraints on every decision the kernel makes.
 
 ---
 
-## Glossary
+### `schemas/`
 
-**Agent**: An AI model instance operating within a defined persona and instruction set. In SuperArchitect OS, the Commander and each specialist team are agents.
+JSON Schema definitions for every canonical object the kernel produces or consumes. Schemas define the exact structure of intent objects, success models, candidate architectures, synthesized system geometries, audit vectors, evolution ledger entries, and handoff manifests.
 
-**Team**: A named agent persona with a defined capability domain, input/output schema, and operating procedures. Teams are instantiated on demand by the Commander.
+```
+schemas/
+  intent_object.json             # Compiled intent from Phase 1
+  success_model.json             # Quality dimensions and thresholds from Phase 2
+  candidate_architecture.json    # Structural candidate from Phase 3
+  comparative_matrix.json        # Scoring matrix from Phase 4
+  synthesized_architecture.json  # Full system geometry from Phase 5
+  audit_vector.json              # Dimensional quality scores from Phase 6
+  evolution_ledger_entry.json    # Single reroute record
+  handoff_manifest.json          # Downstream consumer manifest from Phase 7
+  system_package.json            # Full canonical package envelope
+```
 
-**Workflow**: A structured, multi-phase execution plan that specifies which teams are activated, in what order, with what dependencies, to produce a complete system output.
-
-**Protocol**: The formal communication rules governing message exchange between agents. All inter-agent communication follows the schema defined in `os/commander/protocols.md`.
-
-**Adapter**: A translation layer that converts OS-native protocol messages into the instruction format of a specific AI runtime (e.g., OpenAI Codex, Gemini).
-
-**Phase**: A discrete unit of work within a workflow that groups related team activations. Phases execute sequentially (one phase completes before the next begins). Tasks within a phase can execute in parallel.
-
-**Artifact**: A structured document produced by a team as the output of a task. Examples: architecture blueprint, API contract, test plan, infrastructure specification.
-
-**Quality Gate**: A defined condition that must be satisfied before the workflow advances to the next phase. Quality gates prevent defects from propagating forward.
-
-**ADR (Architecture Decision Record)**: A structured document recording a significant architectural decision — its context, the decision made, and the consequences.
-
-**Commander**: The top-level orchestrator agent. It receives all build requests, manages all team dispatches, resolves conflicts, enforces quality gates, and delivers final outputs.
-
-**Context Block**: A structured summary of prior phase outputs that is prepended to a team's TASK message to give it the context it needs to execute correctly.
-
-**Escalation**: A message from an agent to the human operator requesting a decision that falls outside the agent's autonomous authority.
-
-**Dispatch**: The act of the Commander assigning a task to a specific team by sending it a TASK message with a fully specified work package.
-
-**Handoff**: The act of one team's output becoming another team's input, mediated by the Commander through context packaging.
-
-**Self-Review**: The mandatory quality pass an agent performs on its own output before declaring a task COMPLETE, measured against the applicable standards in `os/standards/`.
-
-**Boot Sequence**: The initialization procedure executed when a new build is triggered. It loads manifests, validates registries, activates the Commander, and begins the first workflow phase.
+All phase outputs must conform to the relevant schema. Schema validation is a quality gate before any phase transition.
 
 ---
 
-*SuperArchitect OS v1.0 — os/README.md — Foundation Team (Team 1) — 2026-03-28*
+### `templates/`
+
+YAML and Markdown templates that phases populate as they execute. Templates define the exact fields each artifact must contain. Agents fill templates — they do not invent their own artifact formats.
+
+```
+templates/
+  final_package_template.yaml    # Master template for the canonical system package
+  system_blueprint_template.md   # Human-readable blueprint structure
+  handoff_manifest_template.yaml # Handoff artifact for downstream consumers
+  audit_report_template.md       # Audit summary for review
+  evolution_ledger_template.yaml # Append-only mutation log
+```
+
+Using templates ensures consistency across all runs and makes outputs machine-readable by downstream processes.
+
+---
+
+### `manifests/`
+
+Kernel configuration files that control operating parameters, mode thresholds, escalation triggers, and agent activation rules. Manifests are read by the Controller Architect during initialization.
+
+```
+manifests/
+  kernel_config.yaml             # Global kernel settings and version
+  mode_thresholds.yaml           # Score thresholds per runtime mode
+  escalation_policy.yaml         # Conditions that trigger human escalation
+  agent_registry.yaml            # Agent identifiers and activation rules
+```
+
+Manifests are not modified during a pipeline run. They are configuration, not state.
+
+---
+
+### `audits/`
+
+Specifications and reference material for the kernel's audit system. This directory defines how quality vectors are computed, how evidence is graded, how uncertainty is rated, and how reroute targets are selected.
+
+```
+audits/
+  audit_backbone.md              # 8 universal backbone dimensions audited on every project
+  confidence_vectors.md          # Evidence strength and uncertainty rating rules
+  reroute_logic.md               # Mapping from failing dimensions to reroute targets
+  anti_slop_criteria.md          # Structural defects that trigger automatic reroute
+```
+
+The Audit Architect operates from these specifications. They define the floor of acceptable output quality and the precise conditions under which the kernel corrects itself.
+
+---
+
+### `runtime/`
+
+Specifications for the Controller Architect's execution loop, runtime mode selection, iteration limits, and escalation handling.
+
+```
+runtime/
+  controller_loop.md             # Phase-by-phase execution logic and transition rules
+  modes.md                       # Standard, Search Heavy, Conservative, Overdrive
+  escalation_handling.md         # When and how to surface decisions to the human
+  iteration_limits.md            # Maximum corrective iterations before forced escalation
+```
+
+Runtime files govern how the kernel behaves under different conditions — not what it produces, but how it decides, iterates, and stops.
+
+---
+
+### `docs/`
+
+Explanatory guides, walkthroughs, and worked examples. This directory is for understanding, not execution. Agents reading docs will find annotated examples of pipeline runs, explanations of design choices, and tutorials for applying the kernel to unfamiliar problem types.
+
+```
+docs/
+  pipeline_walkthrough.md        # Annotated end-to-end pipeline example
+  reading_audit_vectors.md       # How to interpret quality vector output
+  reroute_examples.md            # Worked examples of reroute scenarios
+  applying_to_new_domains.md     # How to apply the kernel to an unfamiliar domain
+```
+
+Docs are informational. They do not define behavior. Behavior is defined by phase specs, agent specs, principles, and manifests.
+
+---
+
+### `projects/`
+
+Example canonical packages from completed pipeline runs. Each project subdirectory contains the final YAML package, the generated blueprint, and the handoff manifest. These serve as reference examples for what complete kernel output looks like.
+
+```
+projects/
+  example-01/
+    final_system_package.yaml
+    system_blueprint.md
+    handoff_manifest.yaml
+  example-02/
+    final_system_package.yaml
+    system_blueprint.md
+    handoff_manifest.yaml
+```
+
+Example packages span different domain types to demonstrate the kernel's domain universality. They are not templates — they are completed outputs used for comparison and calibration.
+
+---
+
+## Reading Order for Activation
+
+Agents activating the kernel should read files in this order:
+
+1. `CLAUDE.md` (root) — kernel identity, pipeline overview, design laws summary
+2. `os/kernel/KERNEL.md` — full operating manual
+3. `os/kernel/principles/` — system primitives, design laws, world-class standard
+4. `os/kernel/phases/` — phase-by-phase specifications
+5. `os/kernel/agents/` — cognitive agent definitions
+6. `os/kernel/templates/` — artifact formats (referenced during execution)
+
+Read completely. Do not skip files. The kernel is a coherent system — partial reading produces partial understanding and defective output.
+
+---
+
+*Universal Systems Kernel v1.0 — os/README.md*
+*Structural cognition, separated from domain cognition, measured at every stage.*

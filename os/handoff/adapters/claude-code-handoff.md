@@ -1,0 +1,384 @@
+# Handoff Adapter: Claude Code
+
+> Transform a System Blueprint into a fully-loaded Claude Code project that can immediately begin building the system — no ramp-up time, no missing context, no ambiguity.
+
+---
+
+## Overview
+
+The Claude Code adapter produces the highest-fidelity handoff of any adapter in the system. When a Claude Code session receives this handoff, it boots with complete knowledge of what it's building, why specific decisions were made, what the current phase is, what tasks need to be done next, and what standards every line of code must meet.
+
+The primary output is a `CLAUDE.md` file for the target project. This file is not a generic template — it is a project-specific configuration document generated entirely from the blueprint's content.
+
+---
+
+## Blueprint → CLAUDE.md Mapping
+
+Every section of a System Blueprint maps to a specific section of the generated `CLAUDE.md`.
+
+| Blueprint Section | CLAUDE.md Section |
+|-------------------|-------------------|
+| `meta.name` + `system.description` | Project header + one-line mission |
+| `problem.statement` + `problem.context` | "Why We're Building This" |
+| `system.type` + `architecture.style` | Architecture overview |
+| `architecture.components` | Component catalog with responsibilities |
+| `architecture.adrs` | "Key Decisions" — non-negotiable constraints |
+| `api.contracts` | API contract summaries with links to full specs |
+| `security.controls` | Security requirements (enforced, not advisory) |
+| `implementation.tech_stack` | Tech stack with version pinning |
+| `implementation.phases[current]` | Current phase objectives and active tasks |
+| `implementation.phases[current].deliverables` | TodoWrite task list |
+| `quality.definition_of_done` | Definition of Done (checked before every commit) |
+| `quality.test_strategy` | Test requirements per code type |
+| `infrastructure.ci_cd` | CI/CD pipeline behavior |
+
+---
+
+## Generated CLAUDE.md Structure
+
+The following is the template for the generated file. Values in `{brackets}` are populated from the blueprint.
+
+```markdown
+# {meta.name}
+
+{system.description}
+
+---
+
+## Why We're Building This
+
+{problem.statement}
+
+**Context**: {problem.context}
+
+**We succeed when**:
+{problem.success_criteria mapped as: "- {criterion.title}: {criterion.metric} {criterion.target}"}
+
+---
+
+## Architecture
+
+**Style**: {architecture.style} — {architecture.style_rationale}
+
+**System Type**: {system.type}
+
+### Components
+
+{for each component in architecture.components:}
+#### {component.name} ({component.id})
+- **Owns**: {component.owns joined with ", "}
+- **Exposes**: {component.exposes joined with ", "}
+- **Consumes**: {component.consumes joined with ", "}
+- **Stack**: {component.tech_stack joined with ", "}
+
+{end for}
+
+---
+
+## Key Decisions (Non-Negotiable)
+
+These architecture decisions are final. Do not reopen them without creating a new ADR and incrementing the blueprint version.
+
+{for each ADR in architecture.adrs where status == "accepted":}
+**{adr.id}: {adr.title}**
+> {adr.decision}
+> Rationale: {adr.rationale}
+
+{end for}
+
+---
+
+## Current Phase: {current_phase.name}
+
+**Objective**: {current_phase.objective}
+**Duration**: {current_phase.duration}
+
+### Active Tasks
+
+{current_phase.deliverables mapped as TodoWrite tasks}
+
+---
+
+## Tech Stack
+
+{for each category in implementation.tech_stack:}
+- **{category}**: {choices mapped as "{name} {version} — {purpose}"}
+{end for}
+
+---
+
+## API Contracts
+
+{for each contract in api.contracts:}
+### {contract.name} ({contract.base_path})
+{contract.endpoints mapped as "- {method} {path}: {summary}"}
+{end for}
+
+Full contract details: `./docs/api/`
+
+---
+
+## Security Requirements
+
+These are requirements, not guidelines. Every PR must demonstrate compliance.
+
+{security.controls mapped as:}
+- **{control.name}**: {control.description} — Implementation: {control.implementation}
+
+**Compliance**: {security.compliance_requirements joined with ", "}
+
+---
+
+## Definition of Done
+
+A task is not complete until ALL of these are true:
+
+{quality.definition_of_done mapped as checkbox list}
+
+---
+
+## Test Requirements
+
+| Type | Framework | Coverage Target | Trigger |
+|------|----------|----------------|---------|
+{quality.test_strategy mapped as table rows}
+
+---
+
+## Custom Commands
+
+{workflow.slash_commands generated from blueprint — see below}
+```
+
+---
+
+## Auto-Generated Directory Structure
+
+The adapter also generates the initial directory structure for the project, derived from the `architecture.components` list. Each component with `type: "service"` gets its own top-level directory. Each component with `type: "frontend"` gets a `web/` directory. Infrastructure components get an `infra/` directory.
+
+**Example: For a blueprint with 5 services + 1 frontend + infrastructure:**
+
+```
+{project-name}/
+  CLAUDE.md                    # Generated by this adapter
+  README.md                    # Generated project README
+  docs/
+    api/                       # API contracts in OpenAPI format
+    architecture/              # ADRs as individual markdown files
+    runbooks/                  # Placeholder runbooks
+  {service-1-name}/            # From COMP-001
+    src/
+    tests/
+    Dockerfile
+    README.md
+  {service-2-name}/            # From COMP-002
+    src/
+    tests/
+    Dockerfile
+    README.md
+  {service-N-name}/
+    src/
+    tests/
+    Dockerfile
+    README.md
+  web/                         # From frontend component
+    src/
+    public/
+    tests/
+  infra/
+    terraform/                 # Or pulumi/, cdk/ based on tech stack
+    docker-compose.yml         # Local development
+    k8s/                       # Kubernetes manifests
+  .github/
+    workflows/                 # CI/CD pipelines from infrastructure.ci_cd
+    PULL_REQUEST_TEMPLATE.md   # From quality standards
+    CODEOWNERS                 # From team structure
+  scripts/
+    setup.sh
+    test.sh
+```
+
+---
+
+## Pre-Populated TodoWrite Tasks
+
+The adapter converts `implementation.phases[current].deliverables` into a structured set of `TodoWrite` tasks. Each deliverable becomes a parent task; the `definition_of_done` items for that deliverable become sub-tasks.
+
+**Example translation:**
+
+Blueprint deliverable:
+```json
+{
+  "id": "DEL-001",
+  "name": "Query Service Core",
+  "description": "Go service that executes SQL queries against ClickHouse with tenant isolation",
+  "type": "service",
+  "definition_of_done": [
+    "POST /queries endpoint implemented and returning results",
+    "Tenant isolation filter applied to all queries",
+    "Redis caching layer implemented with 60s TTL",
+    "Unit tests coverage >= 80%",
+    "Integration tests against real ClickHouse instance passing"
+  ]
+}
+```
+
+Generated TodoWrite tasks:
+```
+[ ] Build query-service core (DEL-001)
+    [ ] Implement POST /queries endpoint returning structured results
+    [ ] Apply tenant_id isolation filter to every ClickHouse query
+    [ ] Implement Redis caching layer with 60s TTL for repeated queries
+    [ ] Achieve >= 80% unit test coverage for query execution logic
+    [ ] Write integration tests against real ClickHouse instance
+```
+
+---
+
+## Custom Slash Commands
+
+The adapter generates project-specific slash commands based on the blueprint's workflow patterns. These commands are written to `.claude/commands/` in the project root.
+
+**Standard generated commands:**
+
+`/build-component [component-name]`
+Activates the Architecture + Backend teams with full context for the specified component. Pre-loads the component's responsibility, interfaces, tech stack, and relevant ADRs.
+
+`/review-security`
+Runs a security review pass against the current code, checking against all controls defined in `security.controls` and flagging any gaps.
+
+`/check-done [deliverable-id]`
+Evaluates whether a deliverable meets its Definition of Done. Checks each criterion and produces a go/no-go recommendation.
+
+`/update-blueprint`
+Opens an interactive session to propose changes to the blueprint. Enforces ADR creation for any architectural changes. Increments version automatically.
+
+`/handoff [target-system]`
+Re-runs the handoff for the specified target system using the current blueprint version. Useful when a target system's state diverges from the blueprint.
+
+---
+
+## How the Receiving Claude Code Session Boots
+
+When a Claude Code session opens a project containing the generated `CLAUDE.md`, the following initialization sequence occurs:
+
+1. **Context loading**: The session reads `CLAUDE.md` and loads the system architecture, component catalog, current phase, and active tasks into working context.
+
+2. **Phase orientation**: The session identifies the current phase from `implementation.phases[current]` and presents the phase objective and active task list.
+
+3. **Constraint activation**: ADRs marked `status: "accepted"` are loaded as hard constraints. The session will not suggest approaches that contradict accepted ADRs.
+
+4. **Standards enforcement**: The Definition of Done and test requirements are loaded as evaluation criteria that apply to every code contribution.
+
+5. **Ready state**: The session announces its ready state: what it's building, what phase it's in, and what tasks are next. It does not ask for context — it has it.
+
+**Ready state announcement format:**
+```
+SuperArchitect OS — Blueprint Handoff Active
+
+System: {meta.name} v{meta.version}
+Phase: {current_phase.name} — {current_phase.objective}
+Active Tasks: {count} deliverables in progress
+
+Key Constraints:
+  - {ADR-001.title}
+  - {ADR-002.title}
+  - {ADR-N.title}
+
+Type /build-component [name] to start building, or ask me about any aspect of the system.
+```
+
+---
+
+## Complete Example: API Gateway Service Blueprint → Claude Code Project
+
+**Input Blueprint Excerpt:**
+```json
+{
+  "meta": { "name": "API Gateway Service", "version": "1.0.0" },
+  "system": { "type": "api", "description": "Reverse proxy and API gateway handling auth, rate limiting, and routing for all microservices" },
+  "architecture": {
+    "style": "hexagonal",
+    "components": [
+      {
+        "id": "COMP-001",
+        "name": "gateway-core",
+        "type": "service",
+        "responsibility": "Handles inbound HTTP requests, validates JWT tokens, applies rate limiting, and proxies to downstream services",
+        "tech_stack": ["Go 1.22", "net/http", "Redis 7", "Prometheus"]
+      }
+    ],
+    "adrs": [
+      {
+        "id": "ADR-001",
+        "title": "Use Go for gateway implementation",
+        "status": "accepted",
+        "decision": "Build the gateway in Go using only stdlib net/http + explicit dependencies",
+        "rationale": "Memory efficiency and goroutine concurrency model critical for proxy performance"
+      }
+    ]
+  },
+  "implementation": {
+    "phases": [
+      {
+        "id": "PH-01",
+        "name": "Core Gateway",
+        "objective": "Functional reverse proxy with JWT auth and rate limiting",
+        "deliverables": [
+          {
+            "name": "JWT Middleware",
+            "definition_of_done": ["RS256 validation working", "Expired token rejection", "Claim extraction to request context", "Unit tests >= 90% coverage"]
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Generated Project Structure:**
+```
+api-gateway-service/
+  CLAUDE.md
+  gateway-core/
+    src/
+      main.go
+      middleware/
+      proxy/
+      ratelimit/
+    tests/
+    Dockerfile
+  docs/api/
+  infra/
+  .github/workflows/
+  .claude/commands/
+    build-component.md
+    review-security.md
+    check-done.md
+```
+
+**Generated CLAUDE.md (excerpt):**
+```markdown
+# API Gateway Service
+
+Reverse proxy and API gateway handling auth, rate limiting, and routing for all microservices.
+
+## Key Decisions (Non-Negotiable)
+
+**ADR-001: Use Go for gateway implementation**
+> Build the gateway in Go using only stdlib net/http + explicit dependencies
+> Rationale: Memory efficiency and goroutine concurrency model critical for proxy performance
+
+## Current Phase: Core Gateway
+
+Build a functional reverse proxy with JWT auth and rate limiting.
+
+### Active Tasks
+- [ ] Build JWT Middleware
+  - [ ] RS256 validation working
+  - [ ] Expired token rejection
+  - [ ] Claim extraction to request context
+  - [ ] Unit tests >= 90% coverage
+```
+
+The receiving Claude Code session opens this project and immediately knows it's building a Go reverse proxy, that it must use stdlib net/http (ADR-001 is a hard constraint), and that the first task is JWT middleware with specific acceptance criteria. Zero ramp-up time.

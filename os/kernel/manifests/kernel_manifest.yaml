@@ -1,0 +1,239 @@
+# =============================================================================
+# Kernel Manifest — Universal Systems Kernel v1.0.0
+# =============================================================================
+# The kernel's own manifest. Registers all phases, agents, schemas, templates,
+# principles, and runtime configuration. This is the entry point for any
+# system that needs to discover or validate kernel capabilities.
+# =============================================================================
+
+kernel:
+  name: universal_systems_kernel
+  version: "1.0.0"
+  purpose: "Domain-agnostic architecture reasoning engine that produces canonical system packages through a 7-phase pipeline of intent compilation, success modeling, architecture generation, candidate selection, synthesis, audit, and delivery."
+
+  # ---------------------------------------------------------------------------
+  # Phases — the 7-phase pipeline
+  # ---------------------------------------------------------------------------
+  phases:
+    - name: intent_compilation
+      number: 1
+      path: "os/kernel/phases/phase-1-intent-compilation.md"
+      description: "Parse and enrich the raw build request into a structured intent object."
+      produces: "intent"
+
+    - name: success_model
+      number: 2
+      path: "os/kernel/phases/phase-2-success-model.md"
+      description: "Define the evaluation framework — universal backbone plus project-specific dimensions."
+      produces: "success_model"
+
+    - name: architecture_generation
+      number: 3
+      path: "os/kernel/phases/phase-3-architecture-generation.md"
+      description: "Generate 2-4 structurally distinct architecture candidates."
+      produces: "candidates"
+
+    - name: candidate_selection
+      number: 4
+      path: "os/kernel/phases/phase-4-candidate-selection.md"
+      description: "Evaluate candidates against the success model and select or hybridize the best approach."
+      produces: "selection"
+
+    - name: synthesis
+      number: 5
+      path: "os/kernel/phases/phase-5-synthesis.md"
+      description: "Expand the selected candidate into a fully detailed, implementation-ready architecture."
+      produces: "synthesis"
+
+    - name: audit
+      number: 6
+      path: "os/kernel/phases/phase-6-audit.md"
+      description: "Score the synthesized architecture against every success model dimension. Determine pass, reroute, or overdrive."
+      produces: "audit"
+
+    - name: delivery
+      number: 7
+      path: "os/kernel/phases/phase-7-delivery.md"
+      description: "Package the final architecture into deliverable artifacts and hand off to downstream consumers."
+      produces: "outputs, handoff"
+
+  # ---------------------------------------------------------------------------
+  # Agents — the 11 kernel agents
+  # ---------------------------------------------------------------------------
+  agents:
+    - name: controller_architect
+      path: "os/kernel/agents/controller-architect.md"
+      role: "Master orchestrator — routes work, manages the canonical system package, enforces phase gates."
+
+    - name: intent_analyst
+      path: "os/kernel/agents/intent-analyst.md"
+      role: "Parses raw requests into structured intent objects with constraints, signals, and classifications."
+
+    - name: success_model_architect
+      path: "os/kernel/agents/success-model-architect.md"
+      role: "Defines the evaluation framework — backbone dimensions, project-specific dimensions, pass logic."
+
+    - name: architecture_generator
+      path: "os/kernel/agents/architecture-generator.md"
+      role: "Produces structurally distinct architecture candidates from intent and success model."
+
+    - name: candidate_evaluator
+      path: "os/kernel/agents/candidate-evaluator.md"
+      role: "Scores candidates against the success model and recommends selection or hybridization."
+
+    - name: synthesis_engineer
+      path: "os/kernel/agents/synthesis-engineer.md"
+      role: "Expands selected candidate into fully detailed subsystems, interfaces, flows, and contracts."
+
+    - name: quality_auditor
+      path: "os/kernel/agents/quality-auditor.md"
+      role: "Produces audit vectors — scores every dimension with evidence, uncertainty, and rationale."
+
+    - name: evolution_strategist
+      path: "os/kernel/agents/evolution-strategist.md"
+      role: "Designs mutations to fix weak dimensions during reroute/overdrive cycles."
+
+    - name: delivery_packager
+      path: "os/kernel/agents/delivery-packager.md"
+      role: "Transforms the canonical system package into deliverable artifacts (blueprints, manifests, summaries)."
+
+    - name: risk_analyst
+      path: "os/kernel/agents/risk-analyst.md"
+      role: "Identifies risks, failure modes, and threat vectors across the architecture."
+
+    - name: tradeoff_mediator
+      path: "os/kernel/agents/tradeoff-mediator.md"
+      role: "Resolves conflicts between competing quality dimensions using the tradeoff priority order."
+
+  # ---------------------------------------------------------------------------
+  # Schemas — machine-readable validation schemas
+  # ---------------------------------------------------------------------------
+  schemas:
+    - name: intent
+      path: "os/kernel/schemas/intent.schema.json"
+      description: "Intent object produced by Phase 1."
+
+    - name: success_model
+      path: "os/kernel/schemas/success_model.schema.json"
+      description: "Success model produced by Phase 2."
+
+    - name: candidate_architecture
+      path: "os/kernel/schemas/candidate_architecture.schema.json"
+      description: "Single architecture candidate produced by Phase 3."
+
+    - name: audit_vector
+      path: "os/kernel/schemas/audit_vector.schema.json"
+      description: "Audit vector produced by Phase 6."
+
+    - name: evolution_ledger_entry
+      path: "os/kernel/schemas/evolution_ledger_entry.schema.json"
+      description: "Single evolution ledger entry for reroute/overdrive tracking."
+
+    - name: canonical_system_package
+      path: "os/kernel/schemas/canonical_system_package.schema.json"
+      description: "MASTER SCHEMA — the complete canonical system package unifying all others."
+
+  # ---------------------------------------------------------------------------
+  # Templates — fillable YAML templates
+  # ---------------------------------------------------------------------------
+  templates:
+    - name: intent_template
+      path: "os/kernel/templates/intent_template.yaml"
+      schema: "os/kernel/schemas/intent.schema.json"
+      description: "Fill-in-the-blanks template for intent compilation output."
+
+    - name: success_model_template
+      path: "os/kernel/templates/success_model_template.yaml"
+      schema: "os/kernel/schemas/success_model.schema.json"
+      description: "Template with universal backbone pre-populated."
+
+    - name: candidate_architecture_template
+      path: "os/kernel/templates/candidate_architecture_template.yaml"
+      schema: "os/kernel/schemas/candidate_architecture.schema.json"
+      description: "Template for a single architecture candidate."
+
+    - name: audit_vector_template
+      path: "os/kernel/templates/audit_vector_template.yaml"
+      schema: "os/kernel/schemas/audit_vector.schema.json"
+      description: "Template for audit vector output."
+
+    - name: canonical_system_package_template
+      path: "os/kernel/templates/canonical_system_package_template.yaml"
+      schema: "os/kernel/schemas/canonical_system_package.schema.json"
+      description: "MASTER TEMPLATE — complete canonical system package skeleton."
+
+  # ---------------------------------------------------------------------------
+  # Principles — kernel reasoning principles
+  # ---------------------------------------------------------------------------
+  principles:
+    - name: architectural_reasoning
+      path: "os/kernel/principles/architectural-reasoning.md"
+      description: "Core principles governing how the kernel reasons about architecture."
+
+    - name: evaluation_integrity
+      path: "os/kernel/principles/evaluation-integrity.md"
+      description: "Principles ensuring audit scores are honest, evidence-backed, and uncertainty-aware."
+
+    - name: evolution_discipline
+      path: "os/kernel/principles/evolution-discipline.md"
+      description: "Principles governing how mutations are applied during reroute/overdrive cycles."
+
+  # ---------------------------------------------------------------------------
+  # Runtime Configuration
+  # ---------------------------------------------------------------------------
+  runtime:
+    modes:
+      - name: standard
+        description: "Normal pipeline execution with default thresholds."
+      - name: search_heavy
+        description: "Generates more candidates (4-6) and explores more structural biases."
+      - name: conservative
+        description: "Raises all thresholds by 10%, reduces uncertainty tolerance, requires more evidence."
+      - name: overdrive
+        description: "Maximum remediation effort — deeper analysis, more mutation attempts, lower uncertainty tolerance."
+
+    default_mode: standard
+
+    max_reroute_iterations: 5
+
+    escalation_threshold:
+      uncertainty: 0.7
+      consequence: "high"
+
+    pipeline_timeout_minutes: 120
+
+    checkpoint_frequency: "per_phase"
+
+  # ---------------------------------------------------------------------------
+  # Integration with SuperArchitect OS
+  # ---------------------------------------------------------------------------
+  integration:
+    os_team_dispatch: true
+    commander_as_controller: true
+    blueprint_protocol_version: "2.0"
+
+    team_mappings:
+      intent_compilation:
+        - "team-9-product"
+        - "team-10-research"
+      success_model:
+        - "team-9-product"
+        - "team-10-research"
+      architecture_generation:
+        - "team-2-architecture"
+        - "team-10-research"
+      candidate_selection:
+        - "team-2-architecture"
+        - "team-7-security"
+      synthesis:
+        - "team-2-architecture"
+        - "team-3-backend"
+        - "team-4-frontend"
+        - "team-5-data"
+        - "team-6-devops"
+      audit:
+        - "team-7-security"
+        - "team-8-qa"
+      delivery:
+        - "team-6-devops"
+        - "team-1-foundation"

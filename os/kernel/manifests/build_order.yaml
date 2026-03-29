@@ -1,0 +1,208 @@
+# =============================================================================
+# Build Order — Kernel Pipeline Execution Sequence
+# =============================================================================
+# Defines the exact execution order for a kernel pipeline run. Each phase
+# lists the kernel agents that execute it and the OS teams dispatched to
+# support it. Phases execute sequentially; agents within a phase may run
+# in parallel where noted.
+#
+# The routing engine (Phase 6) may reroute the pipeline back to any earlier
+# phase. The build order defines the FORWARD path; reroute targets are
+# determined dynamically by the audit vector.
+# =============================================================================
+
+build_order:
+  # -------------------------------------------------------------------------
+  # Phase 1: Intent Compilation
+  # -------------------------------------------------------------------------
+  - phase: intent_compilation
+    number: 1
+    description: "Parse and enrich the raw build request into a structured intent object."
+    agents:
+      - intent_analyst        # Primary: parses raw request
+      - controller_architect  # Validates and finalizes intent
+    os_teams:
+      - team-9-product        # Provides domain expertise and user context
+      - team-10-research      # Provides competitive landscape and technology context
+    inputs:
+      - "raw build request from human operator"
+    outputs:
+      - "intent object (written to canonical system package)"
+    package_fields_written:
+      - "metadata"
+      - "intent"
+    quality_gate: "Intent object passes schema validation and has no unresolved critical ambiguities."
+
+  # -------------------------------------------------------------------------
+  # Phase 2: Success Model Definition
+  # -------------------------------------------------------------------------
+  - phase: success_model
+    number: 2
+    description: "Define the evaluation framework with universal backbone and project-specific dimensions."
+    agents:
+      - success_model_architect  # Primary: designs the success model
+      - controller_architect     # Validates alignment with intent
+      - tradeoff_mediator        # Validates tradeoff priority ordering
+    os_teams:
+      - team-9-product           # Validates that success dimensions match business goals
+      - team-10-research         # Provides benchmarks and industry standards
+    inputs:
+      - "intent object from Phase 1"
+    outputs:
+      - "success model (written to canonical system package)"
+    package_fields_written:
+      - "success_model"
+    quality_gate: "Success model has all 8 backbone dimensions, at least 1 project-specific dimension, valid tradeoff priority, and at least 2 failure conditions."
+
+  # -------------------------------------------------------------------------
+  # Phase 3: Architecture Generation
+  # -------------------------------------------------------------------------
+  - phase: architecture_generation
+    number: 3
+    description: "Generate 2-4 structurally distinct architecture candidates."
+    agents:
+      - architecture_generator   # Primary: generates candidates (may run in parallel for each candidate)
+      - risk_analyst             # Identifies risks and liabilities per candidate
+      - controller_architect     # Ensures candidates are structurally distinct
+    os_teams:
+      - team-2-architecture      # Provides architectural patterns and precedents
+      - team-10-research         # Provides technology evaluations and case studies
+    inputs:
+      - "intent object"
+      - "success model"
+    outputs:
+      - "2-4 candidate architectures (written to canonical system package)"
+    package_fields_written:
+      - "candidates"
+    quality_gate: "At least 2 candidates with distinct structural_bias values. Each candidate has subsystems, interfaces, flows, and preliminary fitness scores."
+    parallel_execution: true
+    parallel_note: "Architecture generator may produce candidates in parallel. Risk analyst reviews each candidate as it is produced."
+
+  # -------------------------------------------------------------------------
+  # Phase 4: Candidate Selection
+  # -------------------------------------------------------------------------
+  - phase: candidate_selection
+    number: 4
+    description: "Evaluate candidates against the success model and select or hybridize the best approach."
+    agents:
+      - candidate_evaluator      # Primary: scores and ranks candidates
+      - tradeoff_mediator        # Resolves dimension conflicts in scoring
+      - controller_architect     # Finalizes selection decision
+    os_teams:
+      - team-2-architecture      # Validates structural soundness of selection
+      - team-7-security          # Evaluates security posture of top candidates
+    inputs:
+      - "candidates from Phase 3"
+      - "success model from Phase 2"
+    outputs:
+      - "selection decision (written to canonical system package)"
+    package_fields_written:
+      - "selection"
+    quality_gate: "Selection has a chosen_candidate_id, rationale referencing success model dimensions, and confidence >= 0.6. If confidence < 0.6, additional candidates may be generated (reroute to Phase 3)."
+
+  # -------------------------------------------------------------------------
+  # Phase 5: Synthesis
+  # -------------------------------------------------------------------------
+  - phase: synthesis
+    number: 5
+    description: "Expand the selected candidate into a fully detailed, implementation-ready architecture."
+    agents:
+      - synthesis_engineer       # Primary: expands candidate into full architecture
+      - risk_analyst             # Defines failure containment boundaries
+      - evolution_strategist     # Defines evolution paths
+      - controller_architect     # Validates completeness and coherence
+    os_teams:
+      - team-2-architecture      # Provides detailed architectural patterns
+      - team-3-backend           # Validates backend subsystem designs
+      - team-4-frontend          # Validates frontend subsystem designs
+      - team-5-data              # Validates data subsystem designs
+      - team-6-devops            # Validates infrastructure and deployment designs
+    inputs:
+      - "selected candidate from Phase 4"
+      - "intent object"
+      - "success model"
+    outputs:
+      - "fully synthesized architecture (written to canonical system package)"
+    package_fields_written:
+      - "synthesis"
+    quality_gate: "Synthesis has subsystems with technology stacks, interfaces with protocols, flows with error paths, dependencies, control points, feedback loops, failure containment boundaries, and evolution paths."
+    parallel_execution: true
+    parallel_note: "OS teams may review subsystem designs in parallel by domain (backend, frontend, data, devops)."
+
+  # -------------------------------------------------------------------------
+  # Phase 6: Audit and Scoring
+  # -------------------------------------------------------------------------
+  - phase: audit
+    number: 6
+    description: "Score the synthesized architecture across every success model dimension. Determine pass, reroute, or overdrive."
+    agents:
+      - quality_auditor          # Primary: produces audit vector
+      - risk_analyst             # Provides evidence for failure_awareness scoring
+      - tradeoff_mediator        # Validates that tradeoff priorities are respected
+      - evolution_strategist     # Designs mutations if reroute is needed
+      - controller_architect     # Executes routing decision
+    os_teams:
+      - team-7-security          # Provides security audit evidence
+      - team-8-qa                # Provides testability and quality evidence
+    inputs:
+      - "synthesized architecture from Phase 5"
+      - "success model from Phase 2"
+      - "previous audit vectors (if rerouting)"
+    outputs:
+      - "audit vector (written to canonical system package)"
+      - "evolution ledger entry (if rerouting)"
+      - "routing decision (pass / reroute / overdrive)"
+    package_fields_written:
+      - "audit"
+      - "routing_state"
+      - "evolution (if rerouting)"
+    quality_gate: "Every success model dimension has a score with evidence >= evidence_threshold and uncertainty <= uncertainty_tolerance. Overall status is determined by pass_logic."
+    routing_logic:
+      on_pass: "Proceed to Phase 7 (delivery)."
+      on_reroute: "Evolution strategist designs mutation. Pipeline reroutes to the target phase (typically Phase 3 or Phase 5). Reroute count incremented."
+      on_overdrive: "Maximum remediation mode. All thresholds raised. Pipeline reroutes with expanded analysis. If max_reroute_iterations exceeded, escalate to human."
+
+  # -------------------------------------------------------------------------
+  # Phase 7: Delivery
+  # -------------------------------------------------------------------------
+  - phase: delivery
+    number: 7
+    description: "Package the final architecture into deliverable artifacts and hand off to downstream consumers."
+    agents:
+      - delivery_packager        # Primary: produces blueprint, manifest, summary
+      - controller_architect     # Finalizes package and updates metadata
+    os_teams:
+      - team-6-devops            # Validates deployment artifacts
+      - team-1-foundation        # Archives the canonical system package
+    inputs:
+      - "complete canonical system package (all fields populated)"
+    outputs:
+      - "architecture blueprint document"
+      - "build manifest"
+      - "package summary"
+      - "handoff configuration"
+    package_fields_written:
+      - "outputs"
+      - "handoff"
+      - "metadata.status (set to 'delivered')"
+    quality_gate: "Blueprint, manifest, and summary are non-empty. Handoff targets are specified. Package status is 'delivered'."
+
+# =============================================================================
+# Reroute Policy
+# =============================================================================
+reroute_policy:
+  max_iterations: 5
+  escalation_on_max: true
+  escalation_message: "Architecture has failed audit {reroute_count} times. Maximum reroute iterations exceeded. Escalating to human operator for decision."
+
+  # Which phases can be reroute targets
+  valid_reroute_targets:
+    - intent_compilation       # Rare — only if intent is fundamentally flawed
+    - architecture_generation  # Common — generate new candidates
+    - candidate_selection      # Occasional — re-evaluate with new evidence
+    - synthesis                # Common — refine the synthesized architecture
+
+  # Overdrive mode activation
+  overdrive_trigger:
+    condition: "reroute_count >= 3 OR any dimension score < 0.3"
+    effect: "Switch mode to 'overdrive'. Raise all thresholds by 10%. Expand candidate generation to 4-6. Increase audit depth."

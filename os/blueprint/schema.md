@@ -956,6 +956,23 @@ Handoff {
   delivery_method: "file" | "api" | "clipboard" | "git_commit"
 }
 
+## Unified with Canonical System Package
+
+The System Blueprint IS the canonical system package. The Blueprint Protocol v2.0 adopts the kernel's package schema as its foundation.
+
+### Additional Fields (v2.0)
+
+The following fields are added to the blueprint schema to support kernel integration:
+
+- `candidates` — Array of candidate architectures considered (not just the winner)
+- `selection` — Why the chosen architecture won (rationale, confidence, hybridization details)
+- `audit` — Machine-readable audit vectors with scores, evidence, uncertainty, deltas
+- `routing_state` — Current kernel phase and routing status
+- `evolution` — Immutable ledger of all reroutes and mutations during the build
+- `success_model` — Project-specific definition of "world class" with measurable thresholds
+
+These fields ensure the blueprint is not just a final document but a complete record of the architectural reasoning process.
+
 TargetSystem {
   id:       string
   type:     "claude-code" | "github" | "linear" | "jira" | "langchain" | "autogen" | "crewai" | "generic-api"

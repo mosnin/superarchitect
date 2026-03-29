@@ -1,0 +1,208 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://superarchitect.os/kernel/schemas/intent.schema.json",
+  "title": "Intent Object",
+  "description": "Schema for the Intent object produced by Phase 1 (Intent Compilation). Captures the raw request, parsed objective, constraints, consequence level, and output requirements that drive all downstream phases.",
+  "type": "object",
+  "required": ["metadata", "intent", "output_requirements"],
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "description": "Tracking metadata for the intent compilation.",
+      "required": ["project_id", "created_at"],
+      "additionalProperties": false,
+      "properties": {
+        "project_id": {
+          "type": "string",
+          "description": "Unique identifier for the project. Format: kebab-case slug derived from the project name.",
+          "pattern": "^[a-z0-9][a-z0-9-]*[a-z0-9]$",
+          "minLength": 3,
+          "maxLength": 128,
+          "examples": ["inventory-saas-platform", "ml-fraud-detection-pipeline"]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO 8601 timestamp of when the intent was compiled.",
+          "examples": ["2026-03-29T14:30:00Z"]
+        }
+      }
+    },
+    "intent": {
+      "type": "object",
+      "description": "The parsed and enriched representation of the user's build request.",
+      "required": [
+        "raw_request",
+        "objective",
+        "desired_outcomes",
+        "known_constraints",
+        "implicit_constraints",
+        "consequence_level",
+        "ambiguity_notes",
+        "domain_signals",
+        "system_type_classification"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "raw_request": {
+          "type": "string",
+          "description": "The original, unmodified request as provided by the human operator.",
+          "minLength": 1,
+          "examples": ["Build a multi-tenant SaaS platform for project management with real-time collaboration, Gantt charts, and Jira integration."]
+        },
+        "objective": {
+          "type": "string",
+          "description": "A single, clear sentence that captures what the system must achieve. Distilled from the raw request by the intent analyst.",
+          "minLength": 10,
+          "examples": ["Deliver a multi-tenant SaaS project management platform with real-time collaboration, visual scheduling, and third-party tool integration."]
+        },
+        "desired_outcomes": {
+          "type": "array",
+          "description": "Concrete, measurable outcomes that define success for this project. Each outcome should be testable.",
+          "items": {
+            "type": "string",
+            "minLength": 5
+          },
+          "minItems": 1,
+          "examples": [
+            [
+              "Users can create and manage projects with task hierarchies",
+              "Real-time collaborative editing with <200ms latency",
+              "Bi-directional sync with Jira via REST API"
+            ]
+          ]
+        },
+        "known_constraints": {
+          "type": "array",
+          "description": "Constraints explicitly stated by the requester (budget, timeline, technology mandates, compliance requirements, etc.).",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "examples": [
+            [
+              "Must use PostgreSQL as primary database",
+              "Deploy to AWS us-east-1",
+              "SOC2 Type II compliance required"
+            ]
+          ]
+        },
+        "implicit_constraints": {
+          "type": "array",
+          "description": "Constraints inferred by the intent analyst that were not explicitly stated but are logically necessary (e.g., multi-tenancy implies tenant isolation).",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "examples": [
+            [
+              "Multi-tenancy requires strict data isolation between tenants",
+              "Real-time collaboration requires WebSocket or SSE infrastructure",
+              "Jira integration requires OAuth 2.0 token management"
+            ]
+          ]
+        },
+        "consequence_level": {
+          "type": "string",
+          "description": "The assessed severity level of getting this system wrong. Drives risk tolerance, audit depth, and escalation thresholds.",
+          "enum": ["low", "medium", "high", "critical"],
+          "examples": ["high"]
+        },
+        "ambiguity_notes": {
+          "type": "array",
+          "description": "Areas where the request is ambiguous or underspecified. These are NOT blockers but are recorded for downstream phases to resolve or escalate.",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "examples": [
+            [
+              "Unclear whether 'real-time collaboration' means CRDT-based or OT-based",
+              "No mention of mobile support — assumed web-only unless clarified",
+              "Pricing model not specified — affects tenant provisioning design"
+            ]
+          ]
+        },
+        "domain_signals": {
+          "type": "array",
+          "description": "Domain-specific signals detected in the request that influence architectural decisions (e.g., regulatory domains, industry verticals, scale indicators).",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "examples": [
+            [
+              "B2B SaaS — implies enterprise SSO, audit logging, role-based access",
+              "Project management domain — implies complex state machines for task lifecycle",
+              "Jira integration — implies familiarity with Atlassian ecosystem"
+            ]
+          ]
+        },
+        "system_type_classification": {
+          "type": "string",
+          "description": "The classified system type that determines which build workflow the Commander selects. Must match a registered workflow in the OS manifest.",
+          "minLength": 3,
+          "examples": ["saas", "ai-platform", "enterprise-microservices", "data-pipeline", "cli-tool", "embedded-system"]
+        }
+      }
+    },
+    "output_requirements": {
+      "type": "object",
+      "description": "Specifies what artifacts the build must produce and how they should be delivered.",
+      "required": ["required_artifacts", "format_preferences", "handoff_targets"],
+      "additionalProperties": false,
+      "properties": {
+        "required_artifacts": {
+          "type": "array",
+          "description": "List of artifact types that must be produced by the build pipeline.",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "examples": [
+            [
+              "architecture_blueprint",
+              "api_contracts",
+              "database_schema",
+              "infrastructure_as_code",
+              "ci_cd_pipeline",
+              "test_suite",
+              "deployment_runbook"
+            ]
+          ]
+        },
+        "format_preferences": {
+          "type": "array",
+          "description": "Preferred formats for output artifacts (e.g., OpenAPI 3.1, Terraform, Helm charts).",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "examples": [
+            [
+              "OpenAPI 3.1 for API contracts",
+              "Terraform for infrastructure",
+              "Mermaid for architecture diagrams"
+            ]
+          ]
+        },
+        "handoff_targets": {
+          "type": "array",
+          "description": "Downstream consumers of the build output (teams, systems, CI pipelines, etc.).",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "examples": [
+            [
+              "engineering_team",
+              "github_actions_ci",
+              "argocd_deployment"
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

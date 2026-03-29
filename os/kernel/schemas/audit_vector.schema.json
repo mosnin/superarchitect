@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://superarchitect.os/kernel/schemas/audit_vector.schema.json",
+  "title": "Audit Vector",
+  "description": "Schema for the audit vector produced by Phase 6 (Audit and Scoring). An audit vector is a point-in-time evaluation of the synthesized architecture across all dimensions defined in the success model. It determines whether the architecture passes, needs rerouting, or enters overdrive mode.",
+  "type": "object",
+  "required": ["iteration", "timestamp", "dimensions", "overall_status", "reroute_target", "reroute_rationale"],
+  "additionalProperties": false,
+  "properties": {
+    "iteration": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The audit iteration number. Starts at 1 and increments with each reroute cycle.",
+      "examples": [1, 2, 3]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when this audit vector was produced.",
+      "examples": ["2026-03-29T15:45:00Z"]
+    },
+    "dimensions": {
+      "type": "object",
+      "description": "Per-dimension evaluation results. Keys are dimension names matching the success model (both universal backbone and project-specific). Every dimension in the success model must have a corresponding entry here.",
+      "additionalProperties": {
+        "$ref": "#/definitions/dimension_score"
+      },
+      "examples": [
+        {
+          "coherence": {
+            "score": 0.88,
+            "evidence": 0.85,
+            "uncertainty": 0.12,
+            "delta": 0.0,
+            "status": "pass",
+            "rationale": "All subsystems align toward the stated objective. No contradictory patterns detected. Event-driven backbone provides consistent communication model."
+          },
+          "failure_awareness": {
+            "score": 0.62,
+            "evidence": 0.7,
+            "uncertainty": 0.25,
+            "delta": 0.0,
+            "status": "warn",
+            "rationale": "Circuit breakers defined for external integrations but no explicit dead letter queue strategy for failed async events. Recovery paths underspecified."
+          }
+        }
+      ]
+    },
+    "overall_status": {
+      "type": "string",
+      "description": "The aggregate audit result. 'pass' means all dimensions meet thresholds. 'reroute' means one or more dimensions failed and the pipeline must loop back. 'overdrive' means critical failures detected requiring intensive remediation.",
+      "enum": ["pass", "reroute", "overdrive"]
+    },
+    "reroute_target": {
+      "type": "string",
+      "description": "The phase name to reroute to if overall_status is 'reroute' or 'overdrive'. Empty string if status is 'pass'.",
+      "default": "",
+      "examples": ["", "architecture_generation", "synthesis", "intent_compilation"]
+    },
+    "reroute_rationale": {
+      "type": "string",
+      "description": "Explanation of why a reroute is necessary and what must be fixed. Empty string if status is 'pass'.",
+      "default": ""
+    }
+  },
+  "definitions": {
+    "dimension_score": {
+      "type": "object",
+      "description": "Evaluation result for a single quality dimension.",
+      "required": ["score", "evidence", "uncertainty", "delta", "status", "rationale"],
+      "additionalProperties": false,
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "The evaluated quality score for this dimension (0.0 = worst, 1.0 = best)."
+        },
+        "evidence": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "How much concrete evidence supports this score (0.0 = no evidence / pure speculation, 1.0 = fully evidence-backed). Low evidence with high score is a red flag."
+        },
+        "uncertainty": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "How uncertain the auditor is about this score (0.0 = completely certain, 1.0 = no confidence). High uncertainty triggers deeper analysis or reroute."
+        },
+        "delta": {
+          "type": "number",
+          "minimum": -1.0,
+          "maximum": 1.0,
+          "description": "Change in score from the previous audit iteration. 0.0 on the first iteration. Positive values indicate improvement, negative values indicate regression."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pass", "warn", "fail"],
+          "description": "'pass' = score meets threshold. 'warn' = score is close to threshold or uncertainty is high. 'fail' = score is below threshold."
+        },
+        "rationale": {
+          "type": "string",
+          "description": "Human-readable explanation of why this dimension received this score. Must reference specific architectural elements.",
+          "minLength": 20
+        }
+      }
+    }
+  }
+}

@@ -410,4 +410,42 @@ When the Commander receives any request, it runs the following internal reasonin
 
 ---
 
+## Commander as Controller Architect
+
+The Commander IS the kernel's Controller Architect. In every system build, the Commander runs the 7-phase kernel pipeline:
+
+1. **Initialize** — Create canonical package shell from template
+2. **Execute phases** — For each phase, dispatch kernel agents + OS teams
+3. **Audit** — After each phase, run audit vectors
+4. **Route** — If audit fails, route back to the shallowest fixable stage
+5. **Advance** — If audit passes, proceed to next phase
+6. **Finalize** — When packaging completes, emit final outputs
+
+### Controller Loop
+
+```
+while package.status != "finalized":
+    phase = determine_current_phase(package)
+    agents = get_kernel_agents(phase)
+    teams = get_os_teams(phase)
+    outputs = dispatch(agents, teams, package)
+    package = update_package(package, outputs)
+    audit = run_audit(package)
+    if audit.overall_status == "pass":
+        advance_phase(package)
+    elif audit.overall_status == "reroute":
+        reroute(package, audit.reroute_target)
+        append_evolution_entry(package, audit)
+    elif audit.overall_status == "overdrive":
+        spawn_specialist_passes(package, audit.weak_dimensions)
+```
+
+### Dual Role
+
+The Commander manages both:
+- **Kernel coordination** — phase sequencing, audit interpretation, rerouting decisions
+- **Team orchestration** — dispatching OS specialist teams within each phase, resolving team conflicts, synthesizing team outputs
+
+---
+
 *SuperArchitect OS v1.0 — os/commander/COMMANDER.md — Foundation Team (Team 1) — 2026-03-28*

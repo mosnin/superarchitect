@@ -1,0 +1,233 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://superarchitect.os/kernel/schemas/success_model.schema.json",
+  "title": "Success Model",
+  "description": "Schema for the Success Model produced by Phase 2. Defines the evaluation framework — a universal backbone of 8 fixed quality dimensions plus project-specific dimensions — against which all architecture candidates and the final synthesis are scored.",
+  "type": "object",
+  "required": ["universal_backbone", "project_specific_dimensions", "tradeoff_priority", "failure_conditions", "pass_logic"],
+  "additionalProperties": false,
+  "properties": {
+    "universal_backbone": {
+      "type": "object",
+      "description": "The 8 fixed quality dimensions that apply to every system regardless of domain. These are non-negotiable evaluation axes.",
+      "required": [
+        "coherence",
+        "completeness",
+        "internal_consistency",
+        "adaptability",
+        "efficiency",
+        "failure_awareness",
+        "legibility",
+        "implementability"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "coherence": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Does the architecture tell a unified story? Are all parts aligned toward the same objective without contradictions?"
+        },
+        "completeness": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Does the architecture address all requirements, constraints, and edge cases? Are there gaps in coverage?"
+        },
+        "internal_consistency": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Are naming conventions, patterns, abstractions, and assumptions consistent across the entire system?"
+        },
+        "adaptability": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Can the system evolve to meet future requirements without fundamental restructuring? How well does it handle change?"
+        },
+        "efficiency": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Does the architecture achieve its goals without unnecessary complexity, resource waste, or over-engineering?"
+        },
+        "failure_awareness": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Does the architecture explicitly account for failure modes, degradation paths, and recovery strategies?"
+        },
+        "legibility": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Can a competent engineer understand the system's structure, intent, and behavior by reading the architecture?"
+        },
+        "implementability": {
+          "$ref": "#/definitions/backbone_dimension",
+          "description": "Can this architecture be realistically built with available resources, skills, and timeline? Is the path from blueprint to code clear?"
+        }
+      }
+    },
+    "project_specific_dimensions": {
+      "type": "object",
+      "description": "Additional quality dimensions derived from the project's intent, domain, and constraints. Keys are dimension names, values follow the same structure as backbone dimensions.",
+      "additionalProperties": {
+        "$ref": "#/definitions/backbone_dimension"
+      },
+      "examples": [
+        {
+          "tenant_isolation": {
+            "score": 0.0,
+            "weight": 0.9,
+            "threshold": 0.85,
+            "description": "Strength of data and execution isolation between tenants."
+          },
+          "real_time_latency": {
+            "score": 0.0,
+            "weight": 0.8,
+            "threshold": 0.8,
+            "description": "Ability to deliver collaborative updates within 200ms p99."
+          }
+        }
+      ]
+    },
+    "tradeoff_priority": {
+      "type": "array",
+      "description": "Ordered list of dimensions from highest to lowest priority. When dimensions conflict, higher-priority dimensions win. This ordering drives the architecture selection and audit phases.",
+      "items": {
+        "type": "string",
+        "description": "Dimension name — must match a key in universal_backbone or project_specific_dimensions."
+      },
+      "minItems": 1,
+      "uniqueItems": true,
+      "examples": [
+        [
+          "coherence",
+          "failure_awareness",
+          "tenant_isolation",
+          "completeness",
+          "efficiency",
+          "adaptability",
+          "internal_consistency",
+          "legibility",
+          "implementability",
+          "real_time_latency"
+        ]
+      ]
+    },
+    "failure_conditions": {
+      "type": "array",
+      "description": "Concrete conditions under which the architecture is considered failed. Each condition specifies what constitutes unacceptable quality.",
+      "items": {
+        "$ref": "#/definitions/failure_condition"
+      },
+      "minItems": 1
+    },
+    "pass_logic": {
+      "type": "object",
+      "description": "Defines the quantitative thresholds that determine whether the architecture passes audit.",
+      "required": ["minimum_dimension_scores", "evidence_thresholds", "uncertainty_tolerances"],
+      "additionalProperties": false,
+      "properties": {
+        "minimum_dimension_scores": {
+          "type": "object",
+          "description": "Minimum acceptable score for each dimension. Keys are dimension names, values are minimum scores (0.0-1.0). Dimensions not listed here inherit their threshold from the backbone_dimension definition.",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "examples": [
+            {
+              "coherence": 0.8,
+              "completeness": 0.75,
+              "failure_awareness": 0.8,
+              "tenant_isolation": 0.85
+            }
+          ]
+        },
+        "evidence_thresholds": {
+          "type": "object",
+          "description": "Minimum evidence level required for each dimension's score to be trusted. Keys are dimension names, values are minimum evidence levels (0.0-1.0). A high score with low evidence triggers a reroute.",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "examples": [
+            {
+              "coherence": 0.6,
+              "failure_awareness": 0.7,
+              "tenant_isolation": 0.8
+            }
+          ]
+        },
+        "uncertainty_tolerances": {
+          "type": "object",
+          "description": "Maximum acceptable uncertainty for each dimension. Keys are dimension names, values are maximum uncertainty (0.0-1.0). If uncertainty exceeds this threshold, the dimension is flagged for deeper analysis.",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+          },
+          "examples": [
+            {
+              "coherence": 0.3,
+              "failure_awareness": 0.2,
+              "tenant_isolation": 0.15
+            }
+          ]
+        }
+      }
+    }
+  },
+  "definitions": {
+    "backbone_dimension": {
+      "type": "object",
+      "description": "A single quality dimension with scoring parameters.",
+      "required": ["score", "weight", "threshold"],
+      "properties": {
+        "score": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "default": 0.0,
+          "description": "Current score for this dimension (0.0 = worst, 1.0 = best). Set to 0.0 at model creation time; populated during audit."
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Relative importance of this dimension (0.0 = irrelevant, 1.0 = maximally important). Weights do not need to sum to 1.0."
+        },
+        "threshold": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Minimum acceptable score for this dimension. Scores below this threshold trigger a 'fail' status during audit."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable explanation of what this dimension measures and why it matters for this project."
+        }
+      },
+      "additionalProperties": false
+    },
+    "failure_condition": {
+      "type": "object",
+      "description": "A condition that, if true, means the architecture has failed regardless of aggregate scores.",
+      "required": ["id", "condition", "severity", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this failure condition.",
+          "pattern": "^FC-[0-9]{3}$",
+          "examples": ["FC-001"]
+        },
+        "condition": {
+          "type": "string",
+          "description": "Machine-evaluable condition expression (e.g., 'dimension.failure_awareness.score < 0.5').",
+          "examples": ["dimension.failure_awareness.score < 0.5 AND dimension.failure_awareness.evidence > 0.7"]
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["warning", "blocking", "critical"],
+          "description": "How severe this failure is. 'blocking' halts the pipeline. 'critical' halts and escalates to human."
+        },
+        "description": {
+          "type": "string",
+          "description": "Human-readable explanation of why this failure condition exists and what it protects against."
+        }
+      }
+    }
+  }
+}

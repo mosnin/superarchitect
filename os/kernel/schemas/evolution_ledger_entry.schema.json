@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://superarchitect.os/kernel/schemas/evolution_ledger_entry.schema.json",
+  "title": "Evolution Ledger Entry",
+  "description": "Schema for a single evolution ledger entry. The evolution ledger tracks every mutation applied during the reroute/overdrive loop — what failed, what was changed, and whether the change improved the architecture. It provides a complete audit trail of architectural reasoning.",
+  "type": "object",
+  "required": [
+    "iteration",
+    "timestamp",
+    "failed_layer",
+    "weak_dimensions",
+    "deltas",
+    "reroute_target",
+    "mutation_applied",
+    "rationale",
+    "result",
+    "post_mutation_scores"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "iteration": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The reroute iteration number that produced this entry. Aligns with the audit vector iteration.",
+      "examples": [1, 2, 3]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of when this evolution entry was recorded.",
+      "examples": ["2026-03-29T16:00:00Z"]
+    },
+    "failed_layer": {
+      "type": "string",
+      "description": "The architectural layer or phase where the failure was detected (e.g., 'synthesis', 'architecture_generation', 'intent_compilation').",
+      "minLength": 1,
+      "examples": ["synthesis", "architecture_generation", "candidate_selection"]
+    },
+    "weak_dimensions": {
+      "type": "object",
+      "description": "Dimensions that triggered the reroute. Keys are dimension names, values are the failing scores.",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "examples": [
+        {
+          "failure_awareness": 0.62,
+          "completeness": 0.58
+        }
+      ]
+    },
+    "deltas": {
+      "type": "object",
+      "description": "Score changes for each affected dimension relative to the previous iteration. Keys are dimension names, values are delta values (positive = improvement, negative = regression).",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": -1.0,
+        "maximum": 1.0
+      },
+      "examples": [
+        {
+          "failure_awareness": 0.0,
+          "completeness": 0.0
+        }
+      ]
+    },
+    "reroute_target": {
+      "type": "string",
+      "description": "The phase the pipeline was rerouted to for this iteration.",
+      "minLength": 1,
+      "examples": ["synthesis", "architecture_generation"]
+    },
+    "mutation_applied": {
+      "type": "string",
+      "description": "Precise description of the architectural change that was applied to address the weak dimensions.",
+      "minLength": 10,
+      "examples": [
+        "Added dead letter queue strategy for all async event channels with configurable retry policy and poison message handling.",
+        "Introduced circuit breaker with fallback for Jira integration service. Added health check endpoints to all subsystems."
+      ]
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Explanation of why this specific mutation was chosen over alternatives.",
+      "minLength": 10,
+      "examples": [
+        "Dead letter queues directly address the failure_awareness gap by ensuring no events are silently dropped. This is the minimal change that maximally improves the weakest dimension without regressing others."
+      ]
+    },
+    "result": {
+      "type": "string",
+      "description": "The outcome of this mutation after re-audit. 'improved' means at least one weak dimension improved without others regressing below threshold. 'no_change' means scores did not meaningfully change. 'degraded' means the mutation caused regression.",
+      "enum": ["improved", "no_change", "degraded"]
+    },
+    "post_mutation_scores": {
+      "type": "object",
+      "description": "Dimension scores after the mutation was applied and re-audited. Keys are dimension names, values are new scores.",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "examples": [
+        {
+          "failure_awareness": 0.82,
+          "completeness": 0.71,
+          "coherence": 0.87
+        }
+      ]
+    }
+  }
+}

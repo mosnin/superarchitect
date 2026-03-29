@@ -1,0 +1,314 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://superarchitect.os/kernel/schemas/candidate_architecture.schema.json",
+  "title": "Candidate Architecture",
+  "description": "Schema for a single architecture candidate produced by Phase 3 (Architecture Generation). Each candidate represents a distinct structural approach to fulfilling the intent. Multiple candidates are generated and evaluated before selection in Phase 4.",
+  "type": "object",
+  "required": [
+    "candidate_id",
+    "thesis",
+    "summary",
+    "structural_bias",
+    "assumptions",
+    "advantages",
+    "liabilities",
+    "subsystems",
+    "interfaces",
+    "flows",
+    "fitness_scores"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "candidate_id": {
+      "type": "string",
+      "description": "Unique identifier for this candidate within the project. Format: CAND-NNN.",
+      "pattern": "^CAND-[0-9]{3}$",
+      "examples": ["CAND-001", "CAND-002", "CAND-003"]
+    },
+    "thesis": {
+      "type": "string",
+      "description": "A single sentence that captures the core architectural bet this candidate makes. This is the defining idea that differentiates it from other candidates.",
+      "minLength": 20,
+      "examples": [
+        "Event-sourced microservices with CQRS provide the strongest foundation for real-time multi-tenant collaboration at scale.",
+        "A modular monolith with clear bounded contexts minimizes operational complexity while preserving future decomposition options."
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "description": "A 2-5 sentence overview of the candidate architecture covering its major structural decisions, key technologies, and deployment model.",
+      "minLength": 50
+    },
+    "structural_bias": {
+      "type": "string",
+      "description": "The primary architectural style or pattern family this candidate belongs to.",
+      "enum": [
+        "monolith",
+        "modular_monolith",
+        "microservices",
+        "event_driven",
+        "serverless",
+        "hybrid",
+        "data_mesh",
+        "pipe_and_filter",
+        "layered",
+        "hexagonal",
+        "cqrs_event_sourced",
+        "actor_model",
+        "other"
+      ]
+    },
+    "assumptions": {
+      "type": "array",
+      "description": "Explicit assumptions this candidate makes about the environment, team, scale, or requirements. Each assumption is a risk if proven false.",
+      "items": {
+        "type": "string",
+        "minLength": 10
+      },
+      "minItems": 1,
+      "examples": [
+        [
+          "Team has experience operating Kubernetes in production",
+          "Peak concurrent users will not exceed 50,000 in the first 18 months",
+          "PostgreSQL can handle the write volume with proper partitioning"
+        ]
+      ]
+    },
+    "advantages": {
+      "type": "array",
+      "description": "Specific advantages of this architectural approach relative to the project's intent and success model.",
+      "items": {
+        "$ref": "#/definitions/advantage"
+      },
+      "minItems": 1
+    },
+    "liabilities": {
+      "type": "array",
+      "description": "Known weaknesses, risks, or costs of this architectural approach.",
+      "items": {
+        "$ref": "#/definitions/liability"
+      },
+      "minItems": 1
+    },
+    "subsystems": {
+      "type": "array",
+      "description": "The major subsystems (services, modules, or components) that compose this candidate architecture.",
+      "items": {
+        "$ref": "#/definitions/subsystem"
+      },
+      "minItems": 1
+    },
+    "interfaces": {
+      "type": "array",
+      "description": "The connections between subsystems — APIs, message queues, shared databases, file transfers, etc.",
+      "items": {
+        "$ref": "#/definitions/interface"
+      },
+      "minItems": 0
+    },
+    "flows": {
+      "type": "array",
+      "description": "Key runtime flows that illustrate how the system handles important scenarios end-to-end.",
+      "items": {
+        "$ref": "#/definitions/flow"
+      },
+      "minItems": 1
+    },
+    "fitness_scores": {
+      "type": "object",
+      "description": "Pre-evaluation fitness scores for this candidate, keyed by dimension name from the success model. These are preliminary estimates that get refined during the audit phase.",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "examples": [
+        {
+          "coherence": 0.85,
+          "completeness": 0.7,
+          "internal_consistency": 0.9,
+          "adaptability": 0.8,
+          "efficiency": 0.65,
+          "failure_awareness": 0.75,
+          "legibility": 0.8,
+          "implementability": 0.7,
+          "tenant_isolation": 0.9
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "advantage": {
+      "type": "object",
+      "description": "A specific advantage of the candidate architecture.",
+      "required": ["description"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Clear explanation of the advantage and why it matters for this project.",
+          "minLength": 15
+        },
+        "dimensions_served": {
+          "type": "array",
+          "description": "Which success model dimensions this advantage supports.",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "liability": {
+      "type": "object",
+      "description": "A specific liability, risk, or weakness of the candidate architecture.",
+      "required": ["description"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Clear explanation of the liability and its potential impact.",
+          "minLength": 15
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["low", "medium", "high", "critical"],
+          "default": "medium",
+          "description": "How severe this liability is if it materializes."
+        },
+        "mitigation": {
+          "type": "string",
+          "description": "Known mitigation strategy, if one exists.",
+          "default": ""
+        },
+        "dimensions_threatened": {
+          "type": "array",
+          "description": "Which success model dimensions this liability threatens.",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+    "subsystem": {
+      "type": "object",
+      "description": "A major subsystem within the candidate architecture.",
+      "required": ["name", "purpose", "inputs", "outputs"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Short, descriptive name for the subsystem.",
+          "minLength": 2,
+          "examples": ["auth-service", "task-engine", "notification-hub", "analytics-pipeline"]
+        },
+        "purpose": {
+          "type": "string",
+          "description": "What this subsystem is responsible for. One sentence.",
+          "minLength": 10
+        },
+        "inputs": {
+          "type": "array",
+          "description": "What this subsystem receives — data, events, commands, etc.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "description": "What this subsystem produces — responses, events, state changes, etc.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "technology": {
+          "type": "string",
+          "description": "Primary technology or runtime for this subsystem, if determined.",
+          "default": ""
+        },
+        "scaling_strategy": {
+          "type": "string",
+          "description": "How this subsystem scales (horizontal, vertical, auto-scaling policy, etc.).",
+          "default": ""
+        }
+      }
+    },
+    "interface": {
+      "type": "object",
+      "description": "A connection between two subsystems.",
+      "required": ["from", "to", "protocol", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "string",
+          "description": "Name of the source subsystem."
+        },
+        "to": {
+          "type": "string",
+          "description": "Name of the target subsystem."
+        },
+        "protocol": {
+          "type": "string",
+          "description": "Communication protocol or mechanism used.",
+          "examples": ["REST/HTTP", "gRPC", "async/kafka", "async/rabbitmq", "websocket", "shared-db", "s3-event"]
+        },
+        "description": {
+          "type": "string",
+          "description": "What data or commands flow across this interface.",
+          "minLength": 5
+        },
+        "synchronous": {
+          "type": "boolean",
+          "description": "Whether this interface is synchronous (true) or asynchronous (false).",
+          "default": true
+        },
+        "contract_defined": {
+          "type": "boolean",
+          "description": "Whether a formal API contract (OpenAPI, protobuf, AsyncAPI) has been defined for this interface.",
+          "default": false
+        }
+      }
+    },
+    "flow": {
+      "type": "object",
+      "description": "An end-to-end runtime flow through the system for a key scenario.",
+      "required": ["name", "steps", "triggers"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Descriptive name for this flow.",
+          "examples": ["user-login", "create-task", "real-time-collaboration-sync", "tenant-provisioning"]
+        },
+        "triggers": {
+          "type": "array",
+          "description": "What initiates this flow (user action, scheduled job, event, etc.).",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "steps": {
+          "type": "array",
+          "description": "Ordered sequence of steps in this flow.",
+          "items": {
+            "type": "string",
+            "description": "A single step: 'SubsystemA -> SubsystemB: description of action'."
+          },
+          "minItems": 1
+        },
+        "error_path": {
+          "type": "string",
+          "description": "What happens when this flow fails at any step.",
+          "default": ""
+        },
+        "latency_budget": {
+          "type": "string",
+          "description": "Target end-to-end latency for this flow (e.g., '<200ms p99').",
+          "default": ""
+        }
+      }
+    }
+  }
+}

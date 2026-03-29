@@ -143,10 +143,74 @@ superarchitect/
 │   │   ├── case-studies/            # Real-world system case studies
 │   │   ├── tech-radar/              # Technology evaluation and recommendations
 │   │   └── decision-records/        # Architecture decision record templates
+│   ├── kernel/
+│   │   ├── KERNEL.md                # Kernel identity and operating manual
+│   │   ├── phases/                  # 7-phase pipeline definitions
+│   │   ├── agents/                  # 11 kernel agent definitions
+│   │   ├── principles/              # System primitives, design laws, world-class standard
+│   │   ├── schemas/                 # JSON schemas for all kernel objects
+│   │   ├── templates/               # YAML templates for pipeline artifacts
+│   │   ├── manifests/               # Kernel configuration manifests
+│   │   ├── audits/                  # Audit backbone, confidence vectors, reroute logic
+│   │   ├── runtime/                 # Controller loop, modes, escalation, thresholds
+│   │   └── integration/             # Kernel-to-OS bridge, domain bridge
 │   └── adapters/
 │       ├── openai-codex.md          # OpenAI Codex runtime adapter
 │       ├── gemini.md                # Google Gemini adapter
 │       └── local-llm.md             # Local LLM adapter (Ollama, LM Studio)
+```
+
+---
+
+## The Universal Systems Kernel
+
+SuperArchitect OS is powered by a Universal Systems Kernel — a domain-agnostic architecture reasoning engine that sits above all specialist teams. The kernel separates STRUCTURAL cognition (how to design any system correctly) from DOMAIN cognition (software-specific expertise provided by teams).
+
+### Kernel Pipeline
+
+Every system build passes through 7 kernel phases:
+
+1. **Intent Compilation** — Raw request → structured intent object
+2. **Success Model Generation** — Project-specific "world class" definition with measurable dimensions
+3. **Architecture Search** — Generate 3+ genuinely different structural theses (NOT cosmetic variations)
+4. **Comparative Reasoning** — Score candidates against success model, select or hybridize
+5. **Structural Synthesis** — Build complete system geometry (subsystems, interfaces, flows, feedback loops)
+6. **Audit & Routing** — Measure with machine-readable vectors, reroute selectively to weakest layer
+7. **Packaging** — Emit canonical system package + handoff artifacts
+
+### Kernel Agents
+
+The kernel employs 11 cognitive agents:
+- **Controller Architect** (= Commander) — owns coherence and routing
+- **Intent Analyst** — extracts structured intent
+- **Success Model Architect** — derives project-specific quality criteria
+- **Search Architect** — generates candidate architectures
+- **Comparative Reasoner** — scores and ranks candidates
+- **Synthesis Architect** — builds system geometry
+- **Failure Mode Architect** — adversarial pressure testing
+- **Optimization Architect** — elegance and efficiency
+- **Audit Architect** — machine-readable quality vectors
+- **Mutation Architect** — targeted fixes during rerouting
+- **Packaging Architect** — final package normalization
+
+### Canonical System Package
+
+Every build produces one YAML package — the single source of truth containing: intent, success model, candidate architectures, selection rationale, synthesized architecture, audit vectors, evolution ledger, outputs, and handoff manifest.
+
+### Kernel Location
+
+```
+os/kernel/
+├── KERNEL.md                          # Kernel identity and operating manual
+├── phases/                            # 7-phase pipeline definitions
+├── agents/                            # 11 kernel agent definitions
+├── principles/                        # System primitives, design laws, world-class standard
+├── schemas/                           # JSON schemas for all kernel objects
+├── templates/                         # YAML templates for pipeline artifacts
+├── manifests/                         # Kernel configuration manifests
+├── audits/                            # Audit backbone, confidence vectors, reroute logic
+├── runtime/                           # Controller loop, modes, escalation, thresholds
+└── integration/                       # Kernel-to-OS bridge, domain bridge
 ```
 
 ---
@@ -316,6 +380,8 @@ When a new system build is triggered, the OS executes the following boot sequenc
   Step 3: Validate workflow registry .............. [CHECK]
   Step 4: Load os/commander/COMMANDER.md .......... [LOAD]
   Step 5: Commander activates ..................... [ACTIVE]
+  Step 5.5: Load os/kernel/KERNEL.md ................. [LOAD]
+  Step 5.6: Initialize kernel pipeline ............... [INIT]
   Step 6: Commander reads build request ........... [PARSE]
   Step 7: Commander classifies system type ........ [CLASSIFY]
   Step 8: Commander loads matching workflow ........ [LOAD]

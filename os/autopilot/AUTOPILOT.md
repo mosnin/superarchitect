@@ -379,5 +379,27 @@ Full System Blueprint assembled. Decision Log contains 23 decisions. All quality
 
 ---
 
+## Kernel Mode Integration
+
+Autopilot mode maps to the kernel's runtime modes:
+
+| Autopilot Setting | Kernel Mode | Description |
+|---|---|---|
+| Full Auto (default) | Standard | 3 candidates, normal thresholds, autonomous routing |
+| Deep Analysis | Search Heavy | 5+ candidates, deeper comparison, higher quality ceiling |
+| Safety Critical | Conservative | Stricter thresholds, more evidence required, more escalation |
+| Recovery | Overdrive | Triggered automatically when dimensions fall below 0.5 |
+
+### Autopilot + Kernel Pipeline
+
+In autopilot mode, the Commander runs the full 7-phase kernel pipeline without human intervention:
+1. All phases execute autonomously
+2. Rerouting happens automatically (up to 5 iterations)
+3. Escalation triggers only at extreme thresholds (uncertainty > 0.85 + consequence = critical)
+4. Every autonomous decision is logged in the evolution ledger
+5. The canonical package captures the complete reasoning trail
+
+---
+
 *See `decision-engine.md` for the full rule set powering Autopilot decisions.*
 *See `quality-gates.md` for the complete gate definitions enforced during every run.*

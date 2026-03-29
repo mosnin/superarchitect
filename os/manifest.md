@@ -497,6 +497,37 @@ max_parallel_instances: 2
 
 ---
 
+## Kernel Registry
+
+### Phases
+| Phase | File | Agents | OS Teams |
+|-------|------|--------|----------|
+| 01: Intent Compilation | os/kernel/phases/01_intent_compilation.md | Intent Analyst, Controller | Product, Researcher |
+| 02: Success Model | os/kernel/phases/02_success_model.md | Success Model Architect, Controller | Product, Researcher |
+| 03: Architecture Search | os/kernel/phases/03_architecture_search.md | Search Architect, Controller | Architect |
+| 04: Comparative Reasoning | os/kernel/phases/04_comparative_reasoning.md | Comparative Reasoner, Controller | Architect, Security, Data |
+| 05: Structural Synthesis | os/kernel/phases/05_structural_synthesis.md | Synthesis Architect, Failure Mode, Optimization | Architect, Data, Security, DevOps, Designer |
+| 06: Audit & Routing | os/kernel/phases/06_audit_and_routing.md | Audit Architect, Mutation Architect | QA, Security, Reviewer |
+| 07: Packaging | os/kernel/phases/07_packaging.md | Packaging Architect, Controller | Commander, Designer |
+
+### Schemas
+- os/kernel/schemas/intent.schema.json
+- os/kernel/schemas/success_model.schema.json
+- os/kernel/schemas/candidate_architecture.schema.json
+- os/kernel/schemas/audit_vector.schema.json
+- os/kernel/schemas/evolution_ledger_entry.schema.json
+- os/kernel/schemas/canonical_system_package.schema.json
+
+### Runtime Modes
+| Mode | Description | Candidate Count | Audit Threshold |
+|------|-------------|-----------------|-----------------|
+| Standard | Balanced exploration and correction | 3 | 0.75 |
+| Search Heavy | Deep exploration, more candidates | 5+ | 0.75 |
+| Conservative | Strict thresholds, more escalation | 3 | 0.85 |
+| Overdrive | Focused specialist passes on weak dimensions | 3+ | 0.70 |
+
+---
+
 ## Workflow Registry
 
 ```yaml

@@ -58,13 +58,15 @@ Trace how a single failure can propagate through the system:
 
 ---
 
-## OS Team Collaboration
+## Domain Failure Modes
 
-### Security Team (Team 7)
-Works with the Failure Mode Architect to identify security-specific failure modes: authentication bypass paths, authorization escalation, data exfiltration scenarios, denial-of-service vectors.
+Generic failure mode analysis applies universally. Domain practitioners may supplement with domain-specific failure patterns:
+- In safety-critical systems: failure modes defined by regulatory standards (FMEA, FTA, HAZOP)
+- In clinical systems: adverse event scenarios, escalation failures, handoff breakdowns
+- In physical infrastructure: structural failure modes, load exceedances, environmental risks
+- In organizational systems: decision deadlocks, communication failures, accountability gaps
 
-### QA Team (Team 8)
-Provides testing perspective on failure modes. Identifies which failure scenarios can be tested, which require chaos engineering, and which need monitoring-based detection.
+The Failure Mode Architect identifies structural failure patterns; domain practitioners identify domain-specific failure content.
 
 ---
 

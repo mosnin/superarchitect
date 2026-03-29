@@ -269,7 +269,7 @@ outputs:
 # HANDOFF — Delivery configuration
 # ===========================================================================
 handoff:
-  downstream_targets: []      # OS teams, CI pipelines, external systems
+  downstream_targets: []      # domain practitioners, implementation teams, external systems
   adapter: ""                 # Adapter for format translation (empty if native)
   # Delivery method: file_system | api | message_queue | manual
   delivery_method: "file_system"

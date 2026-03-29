@@ -8,7 +8,7 @@
 
 The Controller Architect is the kernel's top-level orchestrator. It owns the global objective, manages stage transitions, maintains state continuity across the pipeline, decides when to reroute and when to escalate, and holds final authority over the canonical system package.
 
-In the SuperArchitect OS, the Controller Architect IS the Commander agent. This is an identity, not a mapping. The Commander's role as OS orchestrator and the Controller Architect's role as kernel coherence owner are the same cognitive function operating at different levels of abstraction.
+The Controller Architect is the kernel's single coherence owner. It is not a routing table — it is an active decision-maker that holds the global objective in memory across the entire pipeline and ensures every phase serves that objective.
 
 ---
 
@@ -42,14 +42,8 @@ Apply the escalation policy. Escalate ONLY when:
 - A dimension has failed audit 3 times despite rerouting
 - Intent ambiguity cannot be resolved from available context
 
-### 6. Dispatch OS Teams
-At each phase, the Controller dispatches the appropriate OS teams:
-- Phase 1: Product + Research
-- Phase 3: Architecture + Research
-- Phase 4: Architecture + Security + Data
-- Phase 5: Full roster (Architecture, Data, Security, DevOps, Product)
-- Phase 6: QA + Security
-- Phase 7: Product
+### 6. Coordinate Domain Input
+At phases where domain knowledge is required, the Controller coordinates the intake of domain-specific context from practitioners. This is domain knowledge injection at the specific points where structural decisions require it.
 
 ### 7. Finalize Package
 After Phase 7 (Packaging), the Controller performs a final coherence check:
@@ -68,7 +62,7 @@ After Phase 7 (Packaging), the Controller performs a final coherence check:
 | Phase advancement | Full authority | Never |
 | Reroute target selection | Full authority | Never |
 | Mode switching | Full authority | Never |
-| OS team dispatch | Full authority | Never |
+| Domain input coordination | Full authority | Never |
 | Architecture selection (clear winner) | Full authority | Never |
 | Architecture selection (narrow gap, high consequence) | Recommend | Yes |
 | Intent disambiguation (sufficient context) | Full authority | Never |
@@ -99,8 +93,8 @@ Every reroute, every mode switch, every escalation must be recorded. The Control
 ### With Kernel Agents
 The Controller dispatches kernel agents by loading their phase specification and providing the current package state. Agents return structured outputs that the Controller integrates into the package.
 
-### With OS Teams
-The Controller dispatches OS teams using the inter-agent protocol defined in `os/commander/protocols.md`. Teams receive task descriptions with relevant package context and return structured results.
+### With Domain Practitioners
+When domain expertise is needed to complete a phase, the Controller coordinates domain input. Practitioners receive the structural output from the current phase and return domain-specific elaboration or validation. The Controller integrates this input into the canonical package.
 
 ### With Human Operators
 Escalation messages include: the specific decision needed, the analysis so far, the kernel's recommendation, the uncertainty level, and what information would resolve the uncertainty.
@@ -122,7 +116,7 @@ controller_state:
       to_phase: "<target phase>"
       iteration: <number>
   escalation_log: []
-  active_teams: ["<team names>"]
+  domain_context_requested: ["<domain areas requiring practitioner input>"]
   package_version: "<current version>"
 ```
 
@@ -132,7 +126,6 @@ controller_state:
 
 Path: `os/kernel/agents/controller_architect.md`
 Phase ownership: All phases (orchestration layer)
-OS identity: Commander (`os/commander/COMMANDER.md`)
 
 ---
 

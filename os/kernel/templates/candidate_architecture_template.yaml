@@ -17,10 +17,10 @@ thesis: ""
 # 2-5 sentence overview of major structural decisions, key technologies, deployment model
 summary: ""
 
-# Primary architectural style
-# Values: monolith | modular_monolith | microservices | event_driven | serverless |
-#         hybrid | data_mesh | pipe_and_filter | layered | hexagonal |
-#         cqrs_event_sourced | actor_model | other
+# What this candidate optimizes for above all else
+# Values: coherence_first | resilience_first | sovereignty_first | simplicity_first |
+#         performance_first | modularity_first | adaptability_first | cost_first |
+#         data_integrity_first | (or domain-specific equivalent)
 structural_bias: ""
 
 # ---------------------------------------------------------------------------

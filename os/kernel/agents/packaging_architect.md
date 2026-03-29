@@ -45,13 +45,16 @@ Ensure the complete audit trail is embedded in the package or referenced:
 
 ---
 
-## OS Team Collaboration
+## Supporting Agent
 
-### Commander (OS Orchestrator)
-Performs final coherence check. Ensures the blueprint tells a coherent story from objective through architecture through implementation guidance.
+**Controller Architect** performs the final coherence check before the package is frozen:
+- Does the blueprint match the package?
+- Does the package match the intent?
+- Are all audit dimensions passing?
+- Is the evolution ledger complete and accurate?
+- Is the handoff manifest actionable for the downstream targets?
 
-### Product Team (Team 9)
-Reviews documentation quality. Ensures the blueprint is understandable by its intended audience.
+Only after Controller Architect sign-off does the Packaging Architect freeze the package.
 
 ---
 

@@ -40,14 +40,13 @@ Define how the system is designed to change: extension points, migration paths, 
 
 ---
 
-## OS Team Dispatch
+## Supporting Agents
 
-This phase activates the full team roster:
-- **Architecture Team**: Structural decomposition and domain patterns
-- **Data Team**: Data model, ownership, consistency, storage
-- **Security Team**: Threat model, auth/authz, encryption boundaries
-- **DevOps Team**: Infrastructure topology, scaling, observability
-- **Product Team**: User-facing interface validation
+The Synthesis Architect works in concert with two supporting kernel agents:
+- **Failure Mode Architect**: Adversarially pressure-tests every subsystem and interface as synthesis proceeds
+- **Optimization Architect**: Reviews the synthesis for unnecessary complexity and removes anything that adds complexity without proportional value
+
+Domain practitioners translate the structural synthesis into domain-specific implementation artifacts — engineering drawings, operational manuals, clinical protocols, construction plans, org charts — but the synthesis itself is expressed in universal structural primitives.
 
 ---
 

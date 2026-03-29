@@ -44,13 +44,11 @@ Rate how much damage a wrong architecture decision would cause:
 
 ---
 
-## OS Team Collaboration
+## Domain Context
 
-### Product Team (Team 9)
-The Product team translates business language into system requirements. When the Intent Analyst encounters business-domain terminology or stakeholder dynamics it cannot parse, the Product team provides translation.
+When the request involves an unfamiliar domain, the Intent Analyst may request domain context from a practitioner: industry standards, regulatory environment, terminology, and characteristic constraints. Domain practitioners translate business language into system requirements where needed.
 
-### Research Team (Team 10)
-When the request involves an unfamiliar domain, the Research team provides context: competitive landscape, industry standards, regulatory environment, and technology landscape.
+This is optional input, not a required dependency. The Intent Analyst can complete intent compilation without domain context by marking relevant areas as higher uncertainty.
 
 ---
 

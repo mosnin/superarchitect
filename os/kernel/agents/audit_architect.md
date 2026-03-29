@@ -55,13 +55,11 @@ Check the architecture against anti-slop criteria independently of dimension sco
 
 ---
 
-## OS Team Collaboration
+## Domain Evidence
 
-### QA Team (Team 8)
-Runs quality-focused audits. Evaluates testability, coverage feasibility, test architecture alignment. QA findings feed into completeness and implementability dimensions.
+For project-specific success model dimensions, the Audit Architect may request domain-specific evidence from practitioners — regulatory compliance assessments, safety reviews, load-bearing verifications, clinical outcome evaluations. The structural backbone dimensions (coherence, completeness, internal_consistency, etc.) are scored by the kernel alone.
 
-### Security Team (Team 7)
-Runs security-focused audits. Evaluates threat model completeness, authentication/authorization architecture, data protection, compliance posture. Security findings feed into failure awareness and security-specific dimensions.
+The Audit Architect operates independently from the Synthesis Architect to prevent self-review bias.
 
 ---
 

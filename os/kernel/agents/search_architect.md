@@ -40,13 +40,13 @@ Every candidate must be structurally legible -- a competent architect should be 
 
 ---
 
-## OS Team Collaboration
+## Domain Input
 
-### Architecture Team (Team 2)
-Provides domain-informed candidates. While the Search Architect reasons about structural theses, the Architecture team brings knowledge of proven patterns in the target domain. The Architecture team enriches candidates with domain expertise but does not override structural reasoning.
+Domain practitioners enrich structural candidates with field-specific knowledge:
+- **Proven patterns**: What structural approaches have worked in this domain — not prescriptively, but as input that may validate or challenge a candidate's assumptions
+- **Available building blocks**: What tools, infrastructure, and resources are available — candidates must be grounded in what can actually be built
 
-### Research Team (Team 10)
-Evaluates technology options for each candidate. Provides build-vs-buy analysis. Identifies emerging technologies that might enable novel approaches.
+Domain input is integrated AFTER structural theses are established to prevent domain familiarity from constraining the structural search space.
 
 ---
 

@@ -1,23 +1,23 @@
 # Kernel Documentation Overview
 
-> The kernel is the formal reasoning engine at the heart of SuperArchitect OS.
+> The kernel is the formal reasoning engine at the heart of Universal Systems Kernel.
 > It transforms ambiguous build requests into complete, auditable, implementable system designs.
 
 ---
 
 ## What the Kernel Is
 
-The kernel is a **structured system compiler**. It takes a human-language description of a desired software system and produces a complete **canonical system package** — a single, self-contained artifact that captures every architectural decision, every tradeoff, every interface, every failure mode, and every evolution path.
+The kernel is a **structured system compiler**. It takes a human-language description of a desired system — in any domain — and produces a complete **canonical system package** — a single, self-contained artifact that captures every architectural decision, every tradeoff, every interface, every failure mode, and every evolution path.
 
 The kernel is not a template engine. It does not fill in blanks. It **reasons** — generating multiple candidate architectures, comparing them against a formal success model, synthesizing the strongest elements, auditing the result, and iterating until the design meets defined quality thresholds.
 
 ## Why a Formal Kernel Exists
 
-Software architecture is often treated as an art — a loosely structured conversation between experienced engineers that produces diagrams, documents, and decisions scattered across wikis, Slack threads, and whiteboard photos. This works when the team is small, the problem is familiar, and institutional memory is intact.
+System architecture — in software, healthcare, logistics, organizational design, and physical infrastructure — is often treated as an art: a loosely structured conversation between experienced practitioners that produces diagrams, documents, and decisions scattered across wikis, meetings, and whiteboard photos. This works when the team is small, the problem is familiar, and institutional memory is intact.
 
 It fails everywhere else.
 
-The kernel exists because **most domains differ in content, but nearly all share structural laws**. Whether you are designing a real-time collaboration platform, a financial reconciliation pipeline, or a fleet management system, the underlying architectural reasoning follows the same patterns:
+The kernel exists because **most domains differ in content, but nearly all share structural laws**. Whether you are designing a logistics distribution network, a hospital care coordination system, a regional emergency response network, or a software platform, the underlying architectural reasoning follows the same patterns:
 
 1. Understand what the system must achieve (intent)
 2. Define what success looks like (success model)
@@ -31,7 +31,7 @@ The kernel formalizes these patterns into a **repeatable, auditable, improvable 
 
 ## The 11 Universal System Primitives
 
-Every software system, regardless of domain, can be described using 11 structural primitives. The kernel operates on these primitives and produces a canonical system package organized around them:
+Every system, regardless of domain, can be described using 11 structural primitives. The kernel operates on these primitives and produces a canonical system package organized around them:
 
 | # | Primitive | Description |
 |---|-----------|-------------|
@@ -106,8 +106,8 @@ Read the kernel documentation in order:
 | `03_audit_model.md` | Scoring and routing | How quality is measured and defects are corrected |
 | `04_end_to_end_walkthrough.md` | Complete example | A real system built through all 7 phases |
 
-After reading the docs, examine the example project in `os/kernel/projects/example_saas/` to see real kernel artifacts.
+After reading the docs, examine the example project in `os/kernel/projects/example_logistics/` to see real kernel artifacts from a completed non-software domain run (Regional Emergency Response Network).
 
 ---
 
-*Kernel Documentation v1.0 — SuperArchitect OS*
+*Kernel Documentation v1.0 — Universal Systems Kernel*

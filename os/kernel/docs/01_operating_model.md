@@ -196,21 +196,21 @@ Maximum exploration. 4 candidates generated with mandatory diversity constraints
 
 ---
 
-## Integration with OS Teams
+## Domain Practitioner Integration
 
-The kernel does not operate in isolation. Each kernel phase dispatches work to specialist OS teams:
+The kernel operates autonomously across all 7 phases using its 11 cognitive agents. At specific phases, it may request domain context from practitioners — the people who understand the target domain:
 
-| Kernel Phase | Primary Team | Supporting Teams |
-|-------------|-------------|-----------------|
-| Phase 1: Intent Compilation | Team 9 (Product) | Team 10 (Research) |
-| Phase 2: Success Model | Team 2 (Architecture) | Team 7 (Security), Team 8 (QA) |
-| Phase 3: Architecture Search | Team 2 (Architecture) | Team 10 (Research) |
-| Phase 4: Comparative Reasoning | Team 2 (Architecture) | Team 7 (Security), Team 5 (Data) |
-| Phase 5: Structural Synthesis | Team 2 (Architecture) | Team 3 (Backend), Team 4 (Frontend), Team 6 (DevOps) |
-| Phase 6: Audit | Team 8 (QA) | Team 7 (Security) |
-| Phase 7: Packaging | Team 1 (Foundation) | Commander |
+| Phase | When Domain Context Is Needed |
+|-------|-------------------------------|
+| Phase 1 | Unfamiliar domain terminology, regulatory environment, stakeholder dynamics |
+| Phase 2 | Domain-specific success benchmarks, regulatory thresholds, field standards |
+| Phase 3 | Proven structural patterns in the domain, available building blocks |
+| Phase 4 | Domain-specific feasibility assessment for top candidates |
+| Phase 5 | Domain-specific elaboration of interfaces, resources, and constraints |
+| Phase 6 | Domain-specific evidence for project-specific audit dimensions |
+| Phase 7 | Target audience requirements for blueprint and handoff artifacts |
 
-The Commander orchestrates this dispatch. Teams receive their instructions through the protocol defined in `os/commander/protocols.md` and return structured results that the kernel integrates into the canonical package.
+Domain context is injected at the structural points where it matters — not as a parallel workflow, but as input that grounds specific structural decisions in domain reality. The kernel's structural reasoning is not replaced by domain input; it is enriched by it.
 
 ---
 
@@ -232,4 +232,4 @@ Total first-pass time: 75-135 minutes. Each corrective iteration adds 15-45 minu
 
 ---
 
-*Kernel Operating Model v1.0 — SuperArchitect OS*
+*Kernel Operating Model v1.0 — Universal Systems Kernel*

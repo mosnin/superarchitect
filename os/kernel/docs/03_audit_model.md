@@ -169,23 +169,18 @@ The ledger serves multiple purposes:
 
 ---
 
-## How Audit Connects to OS Teams
+## Domain Evidence in the Audit
 
-The audit phase dispatches evaluation work to specialist teams:
+The 8 universal backbone dimensions are scored by the kernel's Audit Architect from structural evidence alone. Project-specific dimensions may require domain evidence from practitioners:
 
-| Audit Dimension | Evaluating Team | Method |
-|----------------|----------------|--------|
-| correctness | Team 2 (Architecture) | Intent-to-design traceability review |
-| modularity | Team 2 (Architecture) | Coupling analysis, boundary review |
-| scalability | Team 2 (Architecture) + Team 6 (DevOps) | Load modeling, bottleneck analysis |
-| security | Team 7 (Security) | Threat model review, STRIDE analysis |
-| operability | Team 6 (DevOps) | Deployment review, runbook evaluation |
-| failure_awareness | Team 8 (QA) | Failure mode analysis, chaos scenario review |
-| implementability | Team 3 (Backend) + Team 4 (Frontend) | "Can we build this?" review |
-| coherence | Team 2 (Architecture) | Cross-section consistency check |
-| Project-specific | Varies by dimension | Domain-appropriate evaluation |
+| Dimension Type | Who Scores It | Evidence Source |
+|---------------|---------------|-----------------|
+| Universal backbone (coherence, completeness, etc.) | Audit Architect | Structural analysis of the synthesis |
+| Domain regulatory compliance | Audit Architect + domain practitioner | Regulatory standards review |
+| Domain safety dimensions | Audit Architect + domain practitioner | Domain safety standards |
+| Domain performance benchmarks | Audit Architect + domain practitioner | Domain performance data |
 
-The Commander dispatches these evaluations in parallel where possible. Each team returns a structured assessment that the audit layer aggregates into the confidence vector.
+When domain evidence is needed, the Audit Architect specifies exactly what evidence is required and what structural gaps the evidence should address. Domain practitioners return structured assessments that map to specific dimensions.
 
 ---
 
@@ -201,4 +196,4 @@ The audit layer itself must meet quality standards:
 
 ---
 
-*Audit Model v1.0 — SuperArchitect OS*
+*Audit Model v1.0 — Universal Systems Kernel*

@@ -170,4 +170,4 @@ Schema validation runs automatically at Phase 7. It may also be invoked manually
 
 ---
 
-*Canonical System Package v1.0 — SuperArchitect OS*
+*Canonical System Package v1.0 — Universal Systems Kernel*

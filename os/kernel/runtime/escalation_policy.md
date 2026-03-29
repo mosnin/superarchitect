@@ -49,23 +49,23 @@ Every escalation produces a structured message delivered to the human operator:
   "options": [
     {
       "option": "A",
-      "description": "Event-driven microservices on managed cloud services",
+      "description": "Distributed hub-and-spoke model with managed coordination infrastructure",
       "score": 0.82,
-      "pros": ["Lower operational burden", "Faster time to market"],
-      "cons": ["Higher cloud costs at scale ($X/month)", "Vendor lock-in risk"],
+      "pros": ["Lower operational burden", "Faster implementation timeline"],
+      "cons": ["Higher ongoing infrastructure costs at scale", "Vendor dependency risk"],
       "confidence": 0.55
     },
     {
       "option": "B",
-      "description": "Modular monolith on self-managed Kubernetes",
+      "description": "Fully distributed peer model with self-managed coordination layer",
       "score": 0.74,
-      "pros": ["Lower cloud costs at scale", "Full portability"],
-      "cons": ["Higher operational complexity", "Requires Kubernetes expertise"],
+      "pros": ["Lower infrastructure costs at scale", "Full operational control"],
+      "cons": ["Higher operational complexity", "Requires coordination protocol expertise"],
       "confidence": 0.55
     }
   ],
-  "recommendation": "Option A, unless the organization has strong Kubernetes expertise and cost sensitivity above $X/month threshold.",
-  "decision_needed": "Select architecture approach. This is a business trade-off between operational cost and operational complexity.",
+  "recommendation": "Option A, unless the organization has strong operational expertise and cost sensitivity above the $X/month threshold.",
+  "decision_needed": "Select architecture approach. This is a strategic trade-off between operational cost and operational complexity.",
   "deadline": "Blocking — build cannot proceed without this decision.",
   "resume_instructions": "Respond with option letter (A or B) and any additional constraints. The build will resume from Phase 4 with the selected candidate."
 }

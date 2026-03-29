@@ -46,13 +46,13 @@ Identify hard failure thresholds -- scores below which the architecture is disqu
 
 ---
 
-## OS Team Collaboration
+## Domain Context
 
-### Product Team (Team 9)
-Defines business success criteria that structural analysis cannot derive. What does the business consider success? What metrics matter? What user experience qualities are non-negotiable?
+Domain practitioners provide two types of input that structural analysis cannot generate alone:
+- **Domain success criteria**: What the field considers success — clinical outcome benchmarks, delivery performance norms, regulatory minimums, structural safety factors. These ground project-specific dimensions in domain reality.
+- **Competitive benchmarks**: What comparable systems achieve in the target domain. Thresholds derived from benchmarks are more credible than thresholds derived from intuition.
 
-### Research Team (Team 10)
-Provides competitive benchmarks. What quality levels do comparable systems achieve? What are industry-standard SLAs? This grounds thresholds in reality.
+Domain context is optional. The kernel can produce a success model without it, but the resulting thresholds will carry higher uncertainty.
 
 ---
 

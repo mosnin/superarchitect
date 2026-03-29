@@ -67,9 +67,9 @@
           "minItems": 1,
           "examples": [
             [
-              "Users can create and manage projects with task hierarchies",
-              "Real-time collaborative editing with <200ms latency",
-              "Bi-directional sync with Jira via REST API"
+              "All agencies see all available resources across the network in real time",
+              "Dispatch time from incident report to unit deployment under 10 minutes at p95",
+              "System operates continuously during any single infrastructure failure"
             ]
           ]
         },
@@ -82,9 +82,9 @@
           "default": [],
           "examples": [
             [
-              "Must use PostgreSQL as primary database",
-              "Deploy to AWS us-east-1",
-              "SOC2 Type II compliance required"
+              "Must comply with NIMS/ICS standards",
+              "Capital budget of $45M over 5 years",
+              "Phase 1 operational within 18 months"
             ]
           ]
         },
@@ -141,9 +141,9 @@
         },
         "system_type_classification": {
           "type": "string",
-          "description": "The classified system type that determines which build workflow the Commander selects. Must match a registered workflow in the OS manifest.",
+          "description": "A descriptive classification of the system type. Used for organizing example projects and informing domain context requests.",
           "minLength": 3,
-          "examples": ["saas", "ai-platform", "enterprise-microservices", "data-pipeline", "cli-tool", "embedded-system"]
+          "examples": ["multi_agency_coordination_network", "care_delivery_system", "logistics_distribution_network", "organizational_transformation", "physical_infrastructure", "software_platform"]
         }
       }
     },

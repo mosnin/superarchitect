@@ -43,16 +43,14 @@ Explain the decision in terms the success model makes auditable. "It felt right"
 
 ---
 
-## OS Team Collaboration
+## Domain Review
 
-### Architecture Team (Team 2)
-Reviews candidates from structural and domain perspectives. Identifies practical implementation challenges that structural analysis might miss.
+Domain practitioners review candidates for domain-specific feasibility that structural scoring cannot assess:
+- Regulatory compliance posture (domain-specific laws and standards)
+- Operational feasibility (staffing, equipment, timeline realism)
+- Domain-specific risk patterns that shift dimension scores
 
-### Security Team (Team 7)
-Reviews each candidate's security posture. Security concerns can shift rankings.
-
-### Data Team (Team 5)
-Reviews data model implications. Data architecture differences between candidates can be decisive.
+Domain review inputs are incorporated as evidence adjustments to existing dimension scores — not as overrides.
 
 ---
 

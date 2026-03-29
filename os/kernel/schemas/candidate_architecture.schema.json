@@ -30,8 +30,8 @@
       "description": "A single sentence that captures the core architectural bet this candidate makes. This is the defining idea that differentiates it from other candidates.",
       "minLength": 20,
       "examples": [
-        "Event-sourced microservices with CQRS provide the strongest foundation for real-time multi-tenant collaboration at scale.",
-        "A modular monolith with clear bounded contexts minimizes operational complexity while preserving future decomposition options."
+        "A hub-and-spoke coordination model balances resilience and political sovereignty while enabling centralized visibility.",
+        "A fully distributed peer model maximizes autonomy and eliminates single points of failure at the cost of coordination complexity."
       ]
     },
     "summary": {
@@ -41,21 +41,17 @@
     },
     "structural_bias": {
       "type": "string",
-      "description": "The primary architectural style or pattern family this candidate belongs to.",
-      "enum": [
-        "monolith",
-        "modular_monolith",
-        "microservices",
-        "event_driven",
-        "serverless",
-        "hybrid",
-        "data_mesh",
-        "pipe_and_filter",
-        "layered",
-        "hexagonal",
-        "cqrs_event_sourced",
-        "actor_model",
-        "other"
+      "description": "The primary structural bet this candidate makes — what it optimizes for above all else.",
+      "examples": [
+        "coherence_first",
+        "resilience_first",
+        "sovereignty_first",
+        "simplicity_first",
+        "performance_first",
+        "modularity_first",
+        "adaptability_first",
+        "cost_first",
+        "data_integrity_first"
       ]
     },
     "assumptions": {
@@ -68,9 +64,9 @@
       "minItems": 1,
       "examples": [
         [
-          "Team has experience operating Kubernetes in production",
-          "Peak concurrent users will not exceed 50,000 in the first 18 months",
-          "PostgreSQL can handle the write volume with proper partitioning"
+          "Political agreement achievable for regional coordination hub",
+          "Municipalities will adopt standardized inter-agency coordination protocol",
+          "CAD system federation is technically feasible across existing infrastructure"
         ]
       ]
     },

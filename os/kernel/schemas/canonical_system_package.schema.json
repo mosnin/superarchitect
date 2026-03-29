@@ -309,12 +309,12 @@
       "properties": {
         "downstream_targets": {
           "type": "array",
-          "description": "List of downstream consumers that will receive this package (OS teams, CI pipelines, external systems).",
+          "description": "List of downstream consumers that will receive this package (domain practitioners, implementation teams, external systems).",
           "items": {
             "type": "string"
           },
           "default": [],
-          "examples": [["team-3-backend", "team-4-frontend", "team-6-devops"]]
+          "examples": [["regional-emergency-authority", "municipal-chiefs", "integration-vendor"]]
         },
         "adapter": {
           "type": "string",

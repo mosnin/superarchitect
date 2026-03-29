@@ -6,9 +6,9 @@
 
 ## Overview
 
-The Controller Loop is the heartbeat of the kernel. It manages the lifecycle of a system build from initial intent to final packaged architecture. The loop advances through phases, dispatches work to agents and OS teams, runs audits, handles rerouting, and enforces safety limits.
+The Controller Loop is the heartbeat of the kernel. It manages the lifecycle of a system build from initial intent to final packaged architecture. The loop advances through phases, activates kernel agents, coordinates domain practitioner input, runs audits, handles rerouting, and enforces safety limits.
 
-The Commander agent IS the Controller Architect. It does not delegate the loop — it runs it directly, dispatching teams at each phase and synthesizing their outputs.
+The Controller Architect runs the loop directly. It does not delegate the control flow — it owns all phase transitions, reroute decisions, and escalation logic.
 
 ---
 
@@ -37,7 +37,7 @@ FUNCTION controller_loop(build_request, mode):
     # STEP 4: Dispatch current phase
     state = EXECUTING
     phase_agents = resolve_phase_agents(current_phase)
-    os_teams = resolve_os_teams(current_phase)  # via kernel_os_bridge
+    domain_context = request_domain_context(current_phase)  # optional; nil if not needed
 
     dispatch_message = build_dispatch(
       phase = current_phase,
@@ -47,7 +47,7 @@ FUNCTION controller_loop(build_request, mode):
     )
 
     # STEP 5: Execute phase
-    phase_outputs = execute_phase(phase_agents, os_teams, dispatch_message)
+    phase_outputs = execute_phase(phase_agents, domain_context, dispatch_message)
 
     # STEP 6: Update package
     package = merge_phase_outputs(package, current_phase, phase_outputs)
@@ -100,7 +100,7 @@ FUNCTION controller_loop(build_request, mode):
         current_phase = next_phase(current_phase)
       ELSE:
         # Phase output is malformed or incomplete — retry once
-        phase_outputs = retry_phase(phase_agents, os_teams, dispatch_message, validation.errors)
+        phase_outputs = retry_phase(phase_agents, domain_context, dispatch_message, validation.errors)
         package = merge_phase_outputs(package, current_phase, phase_outputs)
         current_phase = next_phase(current_phase)
 
@@ -171,11 +171,11 @@ INIT ──> PHASE_1 ──> PHASE_2 ──> PHASE_3 ──> PHASE_4 ──> PHA
 
 For each phase, the Controller:
 
-1. **Resolves agents**: Determines which kernel phase agents handle the structural reasoning.
-2. **Resolves OS teams**: Uses the kernel-OS bridge (`integration/kernel_os_bridge.md`) to determine which OS teams provide domain expertise.
+1. **Resolves agents**: Determines which kernel agents handle the structural reasoning for this phase.
+2. **Requests domain context**: If the phase requires domain knowledge, requests it from available practitioners. This is optional input, not a blocking dependency.
 3. **Builds context**: Assembles all relevant outputs from previous phases, plus any reroute instructions from the evolution ledger.
-4. **Sends dispatch message**: Structured message conforming to `os/commander/protocols.md`.
-5. **Receives outputs**: Waits for all dispatched agents/teams to return results.
+4. **Sends dispatch message**: Structured phase specification with current package state and reroute instructions if applicable.
+5. **Receives outputs**: Waits for all agents to return structured results.
 6. **Merges outputs**: Integrates results into the canonical package.
 
 ### Context Flow Between Phases

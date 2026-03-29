@@ -311,7 +311,7 @@ These criteria are enforced at Phase 6 (Audit) and serve as automatic reroute tr
 
 ## How to Read This Kernel
 
-Agents loading the SuperArchitect OS should read kernel files in this order:
+Agents activating the kernel should read files in this order:
 
 1. **This file** (`os/kernel/KERNEL.md`) -- understand the kernel's identity, pipeline, and agent structure
 2. **Principles** (`os/kernel/principles/`) -- internalize system primitives, design laws, and world-class standard

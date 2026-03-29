@@ -106,7 +106,7 @@ schemas/
   audit_vector.json              # Dimensional quality scores from Phase 6
   evolution_ledger_entry.json    # Single reroute record
   handoff_manifest.json          # Downstream consumer manifest from Phase 7
-  system_package.json            # Full canonical package envelope
+  system_package.json            # Full canonical package envelope (JSON schema)
 ```
 
 All phase outputs must conform to the relevant schema. Schema validation is a quality gate before any phase transition.
